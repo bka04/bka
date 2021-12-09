@@ -1,9 +1,9 @@
-import "./BookList.css";
+import classes from "./BookList.module.css";
 import BookListItem from "./BookListItem";
 
 const BookList = (props) => {
   return (
-    <ul>
+    <ul className={classes.bookList}>
       {props.books.map((book) => (
         <BookListItem
           key={book.id}

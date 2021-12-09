@@ -23,7 +23,7 @@ const Header = (props) => {
   };
 
   return (
-    <div className={classes.topnav}>
+    <nav className={classes.topnav}>
       {CATEGORIES.map((obj) => (
         <Button
           onClick={onClickHandler}
@@ -32,7 +32,7 @@ const Header = (props) => {
           {obj.category}
         </Button>
       ))}
-    </div>
+    </nav>
   );
 };
 
