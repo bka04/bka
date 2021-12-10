@@ -1,14 +1,15 @@
-import { Fragment, useState } from "react";
+import { useState } from "react";
 import Card from "../UI/Card";
 import BookList from "./BookList";
 import BookDetails from "./BookDetails";
+import classes from './Author.module.css';
 
 const BOOKS = [
   {
     id: "twiwu",
     title: "The World Is Waking Up",
     coverFile: "twiwu-cover.jpg",
-    descriptionShort: "Lotsa fun",
+    descriptionShort: "Elementary/Middle School",
     descriptionLong: "",
     amazonURL:
       "https://www.amazon.com/World-Waking-Up-Brent-Aronsen/dp/1090354916/",
@@ -16,7 +17,8 @@ const BOOKS = [
   {
     id: "amu",
     title: "All Mixed Up",
-    descriptionShort: "Kid fun",
+    coverFile: "amu-cover.jpg",
+    descriptionShort: "Elementary",
     descriptionLong: "",
     amazonURL:
       "https://www.amazon.com/All-Mixed-Up-Collection-Limericks/dp/1494414708",
@@ -25,14 +27,15 @@ const BOOKS = [
     id: "afs",
     title: "Animal Fashion Show",
     coverFile: "afs-cover.jpg",
-    descriptionShort: "Animal fun",
+    descriptionShort: "Elementary",
     descriptionLong: "",
     amazonURL: "https://www.amazon.com/gp/product/1505485991/",
   },
   {
     id: "yoga",
     title: "Yoga Poems For the Rest of Us",
-    descriptionShort: "Yoga fun",
+    coverFile: "yoga-cover.jpg",
+    descriptionShort: "All ages",
     descriptionLong: "",
     amazonURL: "https://www.amazon.com/gp/product/1502383462/",
   },
@@ -46,7 +49,7 @@ const Author = (props) => {
   };
 
   return (
-    <Fragment>
+    <div className={classes.mainContainer}>
       <Card>
         <BookDetails
           book={BOOKS.find((bookObj) => {
@@ -57,7 +60,7 @@ const Author = (props) => {
       <Card>
         <BookList books={BOOKS} onBookSelect={bookSelectHandler} />
       </Card>
-    </Fragment>
+    </div>
   );
 };
 

@@ -1,4 +1,7 @@
 .bookListItem {
-  display: flex;
-  gap: 10px;
+  display: block;
+  margin: auto;
+  text-align: center;
+  /* display: flex;
+  gap: 10px; */
 }
