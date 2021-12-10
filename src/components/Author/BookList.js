@@ -12,6 +12,7 @@ const BookList = (props) => {
           coverFile={book.coverFile}
           descriptionShort={book.descriptionShort}
           onBookSelect={props.onBookSelect}
+          border={book.border}
         />
       ))}
     </ul>

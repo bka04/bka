@@ -15,7 +15,13 @@ const BookListItem = (props) => {
       onClick={onClickHandler}
       data-book-id={props.id}
     >
-      <img src={coverSrc} alt={props.title} width="160" className={classes.bookCover}></img>
+      <img
+        src={coverSrc}
+        alt={props.title}
+        width="160"
+        height="200"
+        className={`${classes.bookCover} ${props.border ? classes.thinBorder : ''}`}
+      ></img>
       <h3 className={classes.bookTitle}>{props.title}</h3>
       <p className={classes.bookDesc}>{props.descriptionShort}</p>
     </li>

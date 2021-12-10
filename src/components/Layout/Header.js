@@ -26,8 +26,13 @@ const Header = (props) => {
     <nav className={classes.topnav}>
       {CATEGORIES.map((obj) => (
         <Button
+          key={obj.category}
           onClick={onClickHandler}
-          className={props.activeContent === obj.category ? "headerBtnNav active" : "headerBtnNav"}
+          className={
+            props.activeContent === obj.category
+              ? "headerBtnNav active"
+              : "headerBtnNav"
+          }
         >
           {obj.category}
         </Button>

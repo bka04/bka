@@ -35,9 +35,10 @@ const BOOKS = [
     id: "yoga",
     title: "Yoga Poems For the Rest of Us",
     coverFile: "yoga-cover.jpg",
-    descriptionShort: "All ages",
+    descriptionShort: "Yogis of all ages!",
     descriptionLong: "",
     amazonURL: "https://www.amazon.com/gp/product/1502383462/",
+    border: true
   },
 ];
 
