@@ -9,7 +9,7 @@ const BOOKS = [
     id: "twiwu",
     title: "The World Is Waking Up",
     coverFile: "twiwu-cover.jpg",
-    descriptionShort: "Elementary/Middle School",
+    targetedAge: "Elementary/Middle School",
     descriptionLong: "",
     amazonURL:
       "https://www.amazon.com/World-Waking-Up-Brent-Aronsen/dp/1090354916/",
@@ -18,7 +18,7 @@ const BOOKS = [
     id: "amu",
     title: "All Mixed Up",
     coverFile: "amu-cover.jpg",
-    descriptionShort: "Elementary",
+    targetedAge: "Elementary",
     descriptionLong: "",
     amazonURL:
       "https://www.amazon.com/All-Mixed-Up-Collection-Limericks/dp/1494414708",
@@ -27,7 +27,7 @@ const BOOKS = [
     id: "afs",
     title: "Animal Fashion Show",
     coverFile: "afs-cover.jpg",
-    descriptionShort: "Elementary",
+    targetedAge: "Elementary",
     descriptionLong: "",
     amazonURL: "https://www.amazon.com/gp/product/1505485991/",
   },
@@ -35,7 +35,7 @@ const BOOKS = [
     id: "yoga",
     title: "Yoga Poems For the Rest of Us",
     coverFile: "yoga-cover.jpg",
-    descriptionShort: "Yogis of all ages!",
+    targetedAge: "Yogis of all ages!",
     descriptionLong: "",
     amazonURL: "https://www.amazon.com/gp/product/1502383462/",
     border: true

@@ -6,6 +6,10 @@
   gap: 10px; */
 }
 
+.bookListItem:hover {
+  cursor: pointer;
+}
+
 .bookCover {
   box-shadow: 0 2px 5px 1px rgb(0 0 0 / 20%);
   border-radius: 3px;

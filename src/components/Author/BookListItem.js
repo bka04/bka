@@ -23,7 +23,7 @@ const BookListItem = (props) => {
         className={`${classes.bookCover} ${props.border ? classes.thinBorder : ''}`}
       ></img>
       <h3 className={classes.bookTitle}>{props.title}</h3>
-      <p className={classes.bookDesc}>{props.descriptionShort}</p>
+      <p className={classes.bookDesc}>{props.targetedAge}</p>
     </li>
   );
 };

@@ -10,7 +10,7 @@ const BookList = (props) => {
           id={book.id}
           title={book.title}
           coverFile={book.coverFile}
-          descriptionShort={book.descriptionShort}
+          targetedAge={book.targetedAge}
           onBookSelect={props.onBookSelect}
           border={book.border}
         />
