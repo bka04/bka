@@ -5,3 +5,7 @@
   flex-wrap: wrap;
   padding: 0;
 }
+
+h3.bookListHeader {
+  text-align: center;
+}

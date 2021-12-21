@@ -1,4 +1,5 @@
 import classes from "./BookListItem.module.css";
+import "./Author.css";
 
 const BookListItem = (props) => {
   const coverSrc = props.coverFile
@@ -11,7 +12,7 @@ const BookListItem = (props) => {
 
   return (
     <li
-      className={`${classes.bookListItem} ${props.className}`}
+      className={`${classes.bookListItem} ${classes[props.className]}`}
       onClick={onClickHandler}
       data-book-id={props.id}
     >
@@ -20,9 +21,9 @@ const BookListItem = (props) => {
         alt={props.title}
         width="160"
         height="200"
-        className={`${classes.bookCover} ${props.border ? classes.thinBorder : ''}`}
+        className={`bookCover ${props.border ? 'thinBorder' : ''}`}
       ></img>
-      <h3 className={classes.bookTitle}>{props.title}</h3>
+      <h4 className={classes.bookTitle}>{props.title}</h4>
       <p className={classes.bookDesc}>{props.targetedAge}</p>
     </li>
   );

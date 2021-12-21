@@ -10,7 +10,9 @@ const BOOKS = [
     title: "The World Is Waking Up",
     coverFile: "twiwu-cover.jpg",
     targetedAge: "Elementary/Middle School",
-    descriptionLong: "",
+    descriptionLong: "<p>We thought we were great<br>At hide-and-go-seek<br>For we hadn't been found<br>In over a week.<br></p>" +
+    "<p>But suddenly today,<br>We figured out why:<br>Everyone who played<br>Decided to hide.<br></p>" +
+    "<p>So reads one of the seventy-nine children's poems in this collection. From short and sweet to two page adventures, The World Is Waking Up's poems vary in length, tone, and form. Meet characters like Long-legged Lucy, waiting Willie, and exuberant, effervescently expressive Ed as you enjoy playful illustrations that accompany each poem.</p>",
     amazonURL:
       "https://www.amazon.com/World-Waking-Up-Brent-Aronsen/dp/1090354916/",
   },
@@ -43,10 +45,10 @@ const BOOKS = [
 ];
 
 const Author = (props) => {
-  const [selectedBookId, setSelectedBook] = useState(BOOKS[0].id);
+  const [selectedBookId, setSelectedBookId] = useState(BOOKS[0].id);
 
   const bookSelectHandler = (bookId) => {
-    setSelectedBook(bookId);
+    setSelectedBookId(bookId);
   };
 
   return (
@@ -59,7 +61,7 @@ const Author = (props) => {
         />
       </Card>
       <Card>
-        <BookList books={BOOKS} onBookSelect={bookSelectHandler} />
+        <BookList books={BOOKS} selectedBookId={selectedBookId} onBookSelect={bookSelectHandler} />
       </Card>
     </div>
   );
