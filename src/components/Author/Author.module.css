@@ -2,3 +2,10 @@
   width: 1366px;
   margin: auto;
 }
+
+/* Responsive layout - makes a two column-layout instead of four columns */
+@media (max-width: 1366px) {
+  .mainContainer {
+    width: 100%;
+  }
+}

@@ -1,9 +1,32 @@
 .bookListItem {
   display: block;
-  margin: auto;
+  /* margin: auto; */
+  margin: 10px 0px 20px;
   text-align: center;
+  flex: 1;
   /* display: flex;
   gap: 10px; */
+}
+
+/* @media (max-width: 1200px) {
+  .bookListItem {
+    flex: 33%;
+    max-width: 33%;
+  }
+} */
+
+@media (max-width: 900px) {
+  .bookListItem {
+    flex: 50%;
+    max-width: 50%;
+  }
+}
+
+@media (max-width: 500px) {
+  .bookListItem {
+    flex: 100%;
+    max-width: 100%;
+  }
 }
 
 .bookListItem:hover {
@@ -17,4 +40,12 @@
 
 .thinBorder {
   border: 1px solid black;
+}
+
+h3 {
+  margin: 10px 0px 5px;
+}
+
+p {
+  margin: 0px;
 }
