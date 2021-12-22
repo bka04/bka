@@ -2,6 +2,16 @@
   display: flex;
   gap: 20px;
   margin: 10px;
+  animation: toggleIn 1.5s 1;
+}
+
+@keyframes toggleIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 .footer {

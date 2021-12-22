@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import { Fragment, useEffect } from "react";
 import classes from "./BookDetails.module.css";
 
 const BookDetails = (props) => {
@@ -7,6 +7,10 @@ const BookDetails = (props) => {
   const coverSrc = book.coverFile
     ? require("../../assets/" + book.coverFile).default
     : "";
+
+  useEffect(() => {
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  }, [])
 
   return (
     <Fragment>
