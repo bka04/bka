@@ -2,6 +2,7 @@ import { useState } from "react";
 
 import Header from "./components/Layout/Header";
 import Author from "./components/Author/Author";
+import Crossword from "./components/Games/Crossword";
 
 function App() {
   const [activeContent, setActiveContent] = useState('Author');
@@ -13,6 +14,7 @@ function App() {
     <div>
       <Header activeContent={activeContent} onContentChange={contentChangeHandler} />
       {activeContent === 'Author' && <Author />}
+      {activeContent === 'Games' && <Crossword />}
     </div>
   );
 }
