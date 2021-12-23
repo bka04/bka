@@ -1,60 +1,69 @@
-import { useEffect, useState } from "react";
-import "./Crossword.css";
-import CrosswordCell from "./CrosswordCell";
+import {useState, useEffect} from 'react';
+import CrosswordGrid from "./CrosswordGrid";
+
+
+const DUMMYDATA = [];
+
+for (var i = 1; i < 26; i++) {
+  //TESTING
+  let disabled = "";
+  if (i === 5) {
+    disabled = "disabled";
+  }
+
+  let focus=false;
+  // if (i===12) {
+  //   focus = true;
+  // }
+
+  DUMMYDATA.push({
+    id: i,
+    disabled,
+    focus,
+    value: ''
+  })
+}
 
 const Crossword = (props) => {
-  const [selectedCell, setSelectedCell] = useState({});
+  const [cellData, setCellData] = useState(DUMMYDATA);
+  const [selectedCell, setSelectedCell] = useState(1);
   const [across, setAcross] = useState(true);
-  const [cells, setCells] = useState([]);
 
-  const onClickHandler = (event) => {
-    if (parseInt(event.target.dataset.cellnum) === selectedCell) {
-      setAcross((prevAcross) => {
-        return !prevAcross;
-      });
-    }
-    setSelectedCell(parseInt(event.target.dataset.cellnum));
-  };
 
   const onKeyDownHandler = (event) => {
-    setSelectedCell(parseInt(event.target.dataset.cellnum) + 1);
+    const index = parseInt(event.target.dataset.cellnum);
+    setCellData((prevCellData) => {
+      prevCellData[index - 1].value = event.key;
+      const newCellData = prevCellData.map((cell) => ({ ...cell, focus: false }))
+      newCellData[index].focus = true;
+      return newCellData;
+    })
+    
+
+    if (event.key === 'click') {
+      if (parseInt(event.target.dataset.cellnum) === selectedCell) {
+        setAcross((prevAcross) => {
+          return !prevAcross;
+        });
+      }
+      setSelectedCell(parseInt(event.target.dataset.cellnum));
+    } else if (event.key === 'letter') {
+      //update cellData with user input
+      setSelectedCell(parseInt(event.target.dataset.cellnum) + 1);
+    }
     // cell.target.dataset.cellnum
   };
 
-  useEffect(() => {
-    const updatedCells = [];
-    for (var i = 1; i < 26; i++) {
-      //TESTING
-      let disabled = "";
-      let autoFocus = false;
-      if (i === 5) {
-        disabled = "disabled";
-      }
-      if (i === selectedCell) {
-        autoFocus = true;
-      }
-      let className = "";
-      const val = across ? 1 : 5;
-      if (i === selectedCell + val || i === selectedCell - val) {
-        className = "cellHighlight";
-      }
+  // const updateCellData
 
-      updatedCells.push(
-        <CrosswordCell
-          className={className}
-          disabled={disabled}
-          data-cellnum={i}
-          key={i}
-          onKeyDown={onKeyDownHandler}
-          onClick={onClickHandler}
-          autoFocus={autoFocus}
-        />
-      );
-    }
-    setCells(updatedCells);
-  }, [selectedCell, across]);
-
-  return <div className="crossword">{cells}</div>;
+  return (
+    <CrosswordGrid
+      cellData={cellData}
+      // selectedCell={selectedCell}
+      onKeyDown={onKeyDownHandler}
+    />
+    
+  );
 };
 
 export default Crossword;

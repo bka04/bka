@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import Header from "./components/Layout/Header";
 import Author from "./components/Author/Author";
-import Crossword from "./components/Games/Crossword";
+import Games from "./components/Games/Games";
 
 function App() {
   const [activeContent, setActiveContent] = useState('Author');
@@ -14,7 +14,7 @@ function App() {
     <div>
       <Header activeContent={activeContent} onContentChange={contentChangeHandler} />
       {activeContent === 'Author' && <Author />}
-      {activeContent === 'Games' && <Crossword />}
+      {activeContent === 'Games' && <Games />}
     </div>
   );
 }
