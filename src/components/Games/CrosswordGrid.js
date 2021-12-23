@@ -9,14 +9,14 @@ const CrosswordGrid = (props) => {
   <div className="crossword">
     {props.cellData.map((cell) => (
     <CrosswordCell 
-      className={cell.className}
       disabled={cell.disabled}
+      highlight={cell.highlight}
       data-cellnum={cell.id}
       key={cell.id}
       focus={cell.focus}
       cellValue={cell.value}
       onKeyDown={props.onKeyDown}
-      // onClick={props.onClick}
+      onMouseDown={props.onMouseDown}
     />
     ))}
     
