@@ -76,9 +76,6 @@ const Author = (props) => {
     <div className={classes.mainContainer}>
       <Card>
         <BookDetails
-          // book={BOOKS.find((bookObj) => {
-          //   return bookObj.id === selectedBookId;
-          // })}
           book={findBook(selectedBookId)}
           key={findBook(selectedBookId).id}
         />

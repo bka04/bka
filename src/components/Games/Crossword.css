@@ -21,3 +21,7 @@
 .cell input:disabled {
   background-color: black;
 }
+
+.cellHighlight {
+  background-color: rgb(233, 233, 233);
+}
