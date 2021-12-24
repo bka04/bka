@@ -124,7 +124,14 @@ const reducer = (state, action) => {
 
   switch (action.type) {
     case "keydown":
-      //NEED TO ADD CHECK FOR LETTER!
+      action.event.preventDefault();
+      if (action.event.keyCode < 65 || action.event.keyCode > 90) {
+        return {
+          cellData: state.cellData,
+          selectedCell: state.selectedCell,
+          across: state.across,
+        };
+      }
       state.cellData[index].value = action.event.key;
       state.cellData = clearCellDisplay(state);
       index = getNextCell(state, index);
