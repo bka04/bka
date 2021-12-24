@@ -10,15 +10,10 @@ for (var i = 1; i < 26; i++) {
     disabled = "disabled";
   }
 
-  let focus = false;
-  // if (i===12) {
-  //   focus = true;
-  // }
-
   DUMMYDATA.push({
     id: i,
     disabled,
-    focus,
+    focus: false,
     value: "",
   });
 }
@@ -43,6 +38,8 @@ const reducer = (state, action) => {
         focus: false, //set all other cells' focus to false
       }));
       //NEED TO ADD DOWN!! AND REFACTOR THIS
+      //NEED TO FIX HIGHLIGHTING AFTER IT SELECTS NEW CELL!
+      //pull mousedown stuff into a function, yo.
       if (state.across) {
         index++;
         if (index === 25) {
@@ -77,13 +74,15 @@ const reducer = (state, action) => {
       if (cellNum === state.selectedCell) {
         state.across = !state.across;
       }
-      state.selectedCell = cellNum;
+      // state.selectedCell = cellNum;
   
       //Highlight cells in same word (either across or down)
       const updCellData = state.cellData.map((cell) => ({
         ...cell,
         highlight: false, //set all other cells' highlight to false
+        focus: false
       }));
+      updCellData[index].focus = true;
 
       if (state.across) {
         //highlight letters in same word (across)
@@ -127,9 +126,12 @@ const reducer = (state, action) => {
           index -= 5;
         }
       }
+      
+      //FIX THIS!
+      // updCellData[index].focus = true;
       return {
         cellData: updCellData,
-        selectedCell: state.selectedCell,
+        selectedCell: cellNum,
         across: state.across
       }
     default:
