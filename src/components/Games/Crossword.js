@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useReducer } from "react";
 import CrosswordGrid from "./CrosswordGrid";
 
 const DUMMYDATA = [];
@@ -23,26 +23,27 @@ for (var i = 1; i < 26; i++) {
   });
 }
 
-const Crossword = (props) => {
-  const [cellData, setCellData] = useState(DUMMYDATA);
-  const [selectedCell, setSelectedCell] = useState(0);
-  const [across, setAcross] = useState(true);
+const initialState = {
+  cellData: DUMMYDATA,
+  selectedCell: 0,
+  across: true
+}
 
-  console.log('rendered Crossword');
+const reducer = (state, action) => {
+  const cellNum = parseInt(action.event.target.dataset.cellnum);
+  let index = cellNum - 1;
 
-  const onKeyDownHandler = (event) => {
-    const cellNum = parseInt(event.target.dataset.cellnum);
-    let index = cellNum - 1;
-
-    //NEED TO ADD CHECK FOR LETTER!
-    setCellData((prevCellData) => {
-      prevCellData[index].value = event.key;
-      const newCellData = prevCellData.map((cell) => ({
+  switch (action.type) {
+    case 'keydown':
+  
+      //NEED TO ADD CHECK FOR LETTER!
+      state.cellData[index].value = action.event.key;
+      const newCellData = state.cellData.map((cell) => ({
         ...cell,
         focus: false, //set all other cells' focus to false
       }));
       //NEED TO ADD DOWN!! AND REFACTOR THIS
-      if (across) {
+      if (state.across) {
         index++;
         if (index === 25) {
           index = 0;
@@ -57,82 +58,102 @@ const Crossword = (props) => {
           }
         }
         newCellData[index].focus = true;
-        setSelectedCell(index + 1);
-        return newCellData;
+        return {
+          cellData: newCellData,
+          selectedCell: index + 1,
+          across: state.across
+        }
+      } else {
+        //DOWN!
+        return {
+          cellData: state.cellData,
+          selectedCell: state.selectedCell,
+          across: state.across
+        }
       }
-      
-    });
-  };
 
-  const onMouseDownHandler = (event) => {
-    const cellNum = parseInt(event.target.dataset.cellnum);
-    let index = cellNum - 1;
-
-    if (cellNum === selectedCell) {
-      setAcross((prevAcross) => {
-        return !prevAcross;
-      });
-    }
-    setSelectedCell(cellNum);
-
-    //Highlight cells in same word (either across or down)
-    setCellData((prevCellData) => {
-      const newCellData = prevCellData.map((cell) => ({
+    case 'mousedown':
+  
+      if (cellNum === state.selectedCell) {
+        state.across = !state.across;
+      }
+      state.selectedCell = cellNum;
+  
+      //Highlight cells in same word (either across or down)
+      const updCellData = state.cellData.map((cell) => ({
         ...cell,
         highlight: false, //set all other cells' highlight to false
       }));
 
-      if (across) {
+      if (state.across) {
         //highlight letters in same word (across)
         //first, check to the right
         index++;
         while (index % 5 > 0) {
-          if (newCellData[index].disabled) {
+          if (updCellData[index].disabled) {
             break;
           }
-          newCellData[index].highlight = true;
+          updCellData[index].highlight = true;
           index++;
         }
         //second, check to the left
-        let index2 = cellNum - 1;
-        index2--;
-        while (index2 % 5 !== 4 && index2 >= 0) {
-          if (newCellData[index2].disabled) {
+        index = cellNum - 1;
+        index--;
+        while (index % 5 !== 4 && index >= 0) {
+          if (updCellData[index].disabled) {
             break;
           }
-          newCellData[index2].highlight = true;
-          index2--;
+          updCellData[index].highlight = true;
+          index--;
         }
       } else {
         //first, check below
         index += 5;
         while (index < 25) {
-          if (newCellData[index].disabled) {
+          if (updCellData[index].disabled) {
             break;
           }
-          newCellData[index].highlight = true;
+          updCellData[index].highlight = true;
           index += 5;
         }
         //second, check above
-        let index2 = cellNum - 1;
-        index2 -= 5;
-        while (index2 >= 0) {
-          if (newCellData[index2].disabled) {
+        index = cellNum - 1;
+        index -= 5;
+        while (index >= 0) {
+          if (updCellData[index].disabled) {
             break;
           }
-          newCellData[index2].highlight = true;
-          index2 -= 5;
+          updCellData[index].highlight = true;
+          index -= 5;
         }
       }
+      return {
+        cellData: updCellData,
+        selectedCell: state.selectedCell,
+        across: state.across
+      }
+    default:
+      throw new Error();
+  }
+}
 
-      return newCellData;
-    });
+const Crossword = (props) => {
+
+  const [state, dispatch] = useReducer(reducer, initialState);
+
+  console.log('rendered Crossword');
+
+  const onKeyDownHandler = (event) => {
+    dispatch({type: 'keydown', event})
+  }
+
+  const onMouseDownHandler = (event) => {
+    dispatch({type: 'mousedown', event})
   };
 
   return (
     <CrosswordGrid
-      cellData={cellData}
-      // selectedCell={selectedCell}
+      cellData={state.cellData}
       onKeyDown={onKeyDownHandler}
       onMouseDown={onMouseDownHandler}
     />
