@@ -25,23 +25,42 @@ for (var i = 1; i < 26; i++) {
 
 const Crossword = (props) => {
   const [cellData, setCellData] = useState(DUMMYDATA);
-  const [selectedCell, setSelectedCell] = useState(1);
+  const [selectedCell, setSelectedCell] = useState(0);
   const [across, setAcross] = useState(true);
+
+  console.log('rendered Crossword');
 
   const onKeyDownHandler = (event) => {
     const cellNum = parseInt(event.target.dataset.cellnum);
+    let index = cellNum - 1;
 
     //NEED TO ADD CHECK FOR LETTER!
     setCellData((prevCellData) => {
-      prevCellData[cellNum - 1].value = event.key;
+      prevCellData[index].value = event.key;
       const newCellData = prevCellData.map((cell) => ({
         ...cell,
         focus: false, //set all other cells' focus to false
       }));
-      //NEED CHECK SO WE SKIP OVER DISABLED CELLS!
-      newCellData[cellNum].focus = true;
-      setSelectedCell(cellNum + 1);
-      return newCellData;
+      //NEED TO ADD DOWN!! AND REFACTOR THIS
+      if (across) {
+        index++;
+        if (index === 25) {
+          index = 0;
+        }
+        while (index < 25) {
+          if (newCellData[index].disabled === '') {
+            break;
+          }
+          index++;
+          if (index === 24) {
+            index = 0;
+          }
+        }
+        newCellData[index].focus = true;
+        setSelectedCell(index + 1);
+        return newCellData;
+      }
+      
     });
   };
 
@@ -78,7 +97,6 @@ const Crossword = (props) => {
         let index2 = cellNum - 1;
         index2--;
         while (index2 % 5 !== 4 && index2 >= 0) {
-          console.log(index2);
           if (newCellData[index2].disabled) {
             break;
           }
@@ -99,7 +117,6 @@ const Crossword = (props) => {
         let index2 = cellNum - 1;
         index2 -= 5;
         while (index2 >= 0) {
-          console.log(index2);
           if (newCellData[index2].disabled) {
             break;
           }

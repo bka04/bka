@@ -3,8 +3,6 @@ import CrosswordCell from "./CrosswordCell";
 
 const CrosswordGrid = (props) => {
 
-  console.log('rendered grid'); 
-
   return (
   <div className="crossword">
     {props.cellData.map((cell) => (
