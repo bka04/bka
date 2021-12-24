@@ -77,7 +77,8 @@ const Crossword = (props) => {
         //second, check to the left
         let index2 = cellNum - 1;
         index2--;
-        while (index2 % 5 !== 4) {
+        while (index2 % 5 !== 4 && index2 >= 0) {
+          console.log(index2);
           if (newCellData[index2].disabled) {
             break;
           }
@@ -85,7 +86,7 @@ const Crossword = (props) => {
           index2--;
         }
       } else {
-        //first, check to the right
+        //first, check below
         index += 5;
         while (index < 25) {
           if (newCellData[index].disabled) {
@@ -93,6 +94,17 @@ const Crossword = (props) => {
           }
           newCellData[index].highlight = true;
           index += 5;
+        }
+        //second, check above
+        let index2 = cellNum - 1;
+        index2 -= 5;
+        while (index2 >= 0) {
+          console.log(index2);
+          if (newCellData[index2].disabled) {
+            break;
+          }
+          newCellData[index2].highlight = true;
+          index2 -= 5;
         }
       }
 
