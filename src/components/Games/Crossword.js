@@ -3,6 +3,9 @@ import CrosswordGrid from "./CrosswordGrid";
 
 const DUMMYDATA = [];
 
+const TOTALCELLS = 25;
+const COLS = 5;
+
 for (var i = 1; i < 26; i++) {
   //TESTING
   let disabled = "";
@@ -26,11 +29,13 @@ const initialState = {
 
 const updateHighlighting = (state, index) => {
   const cellNum = index + 1;
-  if (state.across) {
-    //highlight letters in same word (across)
+  if (state.cellData[index].disabled === '') {
+    state.cellData[index].highlight = true;
+  }
+  if (state.across) { //highlight letters in same word (across)
     //first, check to the right
     index++;
-    while (index % 5 > 0) {
+    while (index % COLS > 0) {
       if (state.cellData[index].disabled) {
         break;
       }
@@ -40,33 +45,32 @@ const updateHighlighting = (state, index) => {
     //second, check to the left
     index = cellNum - 1;
     index--;
-    while (index % 5 !== 4 && index >= 0) {
+    while (index % COLS !== (COLS - 1) && index >= 0) {
       if (state.cellData[index].disabled) {
         break;
       }
       state.cellData[index].highlight = true;
       index--;
     }
-  } else {
-    //highlight letters in same word (down)
+  } else {//highlight letters in same word (down)
     //first, check below
-    index += 5;
-    while (index < 25) {
+    index += COLS;
+    while (index < TOTALCELLS) {
       if (state.cellData[index].disabled) {
         break;
       }
       state.cellData[index].highlight = true;
-      index += 5;
+      index += COLS;
     }
     //second, check above
     index = cellNum - 1;
-    index -= 5;
+    index -= COLS;
     while (index >= 0) {
       if (state.cellData[index].disabled) {
         break;
       }
       state.cellData[index].highlight = true;
-      index -= 5;
+      index -= COLS;
     }
   }
   return state.cellData;
@@ -84,32 +88,32 @@ const clearCellDisplay = (state) => {
 const getNextCell = (state, index) => {
   if (state.across) {
     index++;
-    if (index === 25) {
+    if (index === TOTALCELLS) {
       index = 0;
     }
-    while (index < 25) {
+    while (index < TOTALCELLS) {
       if (state.cellData[index].disabled === "") {
         break;
       }
       index++;
-      if (index === 24) {
+      if (index === (TOTALCELLS - 1)) {
         index = 0;
       }
     }
   } else { //down
-    index += 5;
-    if (index === 24 + 5) {
+    index += COLS;
+    if (index === (TOTALCELLS - 1) + COLS) {
       index = 0;
-    } else if (index > 24) {
-      index -= 24;
+    } else if (index > (TOTALCELLS - 1)) {
+      index -= (TOTALCELLS - 1);
     } 
-    while (index < 25) {
+    while (index < TOTALCELLS) {
       if (state.cellData[index].disabled === "") {
         break;
       }
-      index += 5;
-      if (index > 24) {
-        index -= 24;
+      index += COLS;
+      if (index > (TOTALCELLS - 1)) {
+        index -= (TOTALCELLS - 1);
       }
     }
 
