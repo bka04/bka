@@ -6,11 +6,11 @@ const DUMMYDATA = [];
 const TOTALCELLS = 25;
 const COLS = 5;
 
-for (var i = 1; i < 26; i++) {
+for (let i = 1; i < 26; i++) {
   //TESTING
-  let disabled = "";
+  let disabled = false;
   if (i === 8) {
-    disabled = "disabled";
+    disabled = true;
   }
 
   DUMMYDATA.push({
@@ -21,15 +21,34 @@ for (var i = 1; i < 26; i++) {
   });
 }
 
+const populateNumbers = (data) => {
+//   Go across (increment by one). Check:
+// Down: 
+//   1) cell below (plus COLS) is not disabled and not greater than TOTALCELLS
+//   2) cell above (minus COLS) IS disabled OR less than zero
+// Across:
+//   1) cell right is not disabled and not past end of row
+//   2) cell left IS disabled OR beginning of row
+
+  // let questionNumber = 1;
+  // for (let i = 0; i < data.length; i++) {
+  //   //check down
+  //   if (!data[i + COLS].disabled && data[i + COLS]
+  // }
+
+  return data;
+
+}
+
 const initialState = {
-  cellData: DUMMYDATA,
+  cellData: populateNumbers(DUMMYDATA),
   selectedCell: 0,
   across: true,
 };
 
 const updateHighlighting = (state, index) => {
   const cellNum = index + 1;
-  if (state.cellData[index].disabled === '') {
+  if (!state.cellData[index].disabled) {
     state.cellData[index].highlight = true;
   }
   if (state.across) { //highlight letters in same word (across)
@@ -85,14 +104,14 @@ const clearCellDisplay = (state) => {
   }));
 };
 
-const getNextCell = (state, index) => {
-  if (state.across) {
+const getNextCell = (state, index, directionOverride = '') => {
+  if ((state.across || directionOverride === 'across') && directionOverride !== 'down') {
     index++;
     if (index === TOTALCELLS) {
       index = 0;
     }
     while (index < TOTALCELLS) {
-      if (state.cellData[index].disabled === "") {
+      if (!state.cellData[index].disabled) {
         break;
       }
       index++;
@@ -108,7 +127,7 @@ const getNextCell = (state, index) => {
       index -= (TOTALCELLS - 1);
     } 
     while (index < TOTALCELLS) {
-      if (state.cellData[index].disabled === "") {
+      if (!state.cellData[index].disabled) {
         break;
       }
       index += COLS;
@@ -129,16 +148,46 @@ const reducer = (state, action) => {
   switch (action.type) {
     case "keydown":
       action.event.preventDefault();
-      if (action.event.keyCode < 65 || action.event.keyCode > 90) {
+
+      if (action.event.keyCode === 8 || action.event.keyCode === 46) { //backspace/delete
+        state.cellData[index].value = '';
         return {
           cellData: state.cellData,
           selectedCell: state.selectedCell,
           across: state.across,
         };
       }
-      state.cellData[index].value = action.event.key;
+
+      if ((action.event.keyCode < 65 || action.event.keyCode > 90) //not a letter
+          && (action.event.keyCode !== 9) //not tab
+          && (action.event.keyCode !== 39) //not right arrow
+          && (action.event.keyCode !== 40)) { //not down arrow
+        return {
+          cellData: state.cellData,
+          selectedCell: state.selectedCell,
+          across: state.across,
+        };
+      }
+
+      if (action.event.keyCode !== 9 
+          && action.event.keyCode !== 39
+          && action.event.keyCode !== 40) { //except for tab/arrow, set to keypress
+        state.cellData[index].value = action.event.key;
+      }
+      
       state.cellData = clearCellDisplay(state);
-      index = getNextCell(state, index);
+
+      switch (action.event.keyCode) {
+        case 39: //right arrow
+          index = getNextCell(state, index, 'across');
+          break;
+        case 40: //down arrow
+          index = getNextCell(state, index, 'down');
+          break;
+        default:
+          index = getNextCell(state, index);
+      }
+
       state.cellData[index].focus = true;
       state.cellData = updateHighlighting(state, index);
 

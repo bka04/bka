@@ -7,7 +7,7 @@ const CrosswordGrid = (props) => {
   <div className="crossword">
     {props.cellData.map((cell) => (
     <CrosswordCell 
-      disabled={cell.disabled}
+      disabled={cell.disabled ? 'disabled' : ''}
       highlight={cell.highlight}
       data-cellnum={cell.id}
       key={cell.id}
