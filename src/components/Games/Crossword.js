@@ -105,6 +105,7 @@ const clearCellDisplay = (state) => {
   }));
 };
 
+//is there a way to do shift tab too or not?
 const getNextCell = (state, index, directionOverride = "") => {
   if (
     (state.across || directionOverride === "across") &&
@@ -144,6 +145,45 @@ const getNextCell = (state, index, directionOverride = "") => {
   return index;
 };
 
+const getPrevCell = (state, index, directionOverride = "") => {
+  if (
+    (state.across || directionOverride === "across") &&
+    directionOverride !== "down"
+  ) {
+    index--;
+    if (index < 0) {
+      index = TOTALCELLS - 1;
+    }
+    while (index >= 0) {
+      if (!state.cellData[index].disabled) {
+        break;
+      }
+      index--;
+      if (index < 0) {
+        index = TOTALCELLS - 1;
+      }
+    }
+  } else {
+    //down
+    index -= COLS;
+    if (index === 0 - COLS) {
+      index = TOTALCELLS - 1;
+    } else if (index < 0) {
+      index += TOTALCELLS - 1;
+    }
+    while (index > 0) {
+      if (!state.cellData[index].disabled) {
+        break;
+      }
+      index -= COLS;
+      if (index < 0) {
+        index += TOTALCELLS - 1;
+      }
+    }
+  }
+  return index;
+};
+
 const reducer = (state, action) => {
   const cellNum = parseInt(action.event.target.dataset.cellnum);
   let index = cellNum - 1;
@@ -171,10 +211,17 @@ const reducer = (state, action) => {
 
     if (action.event.keyCode === 8 || action.event.keyCode === 46) {
       //backspace/delete
-      state.cellData[index].value = "";
+      if (state.cellData[index].value === "") {
+        index = getPrevCell(state, index);
+        state.cellData = clearCellDisplay(state);
+        state.cellData[index].focus = true;
+        state.cellData = updateHighlighting(state, index);
+      } else {
+        state.cellData[index].value = "";
+      }
       return {
         cellData: state.cellData,
-        selectedCell: state.selectedCell,
+        selectedCell: index + 1,
         across: state.across,
       };
     }
@@ -182,8 +229,10 @@ const reducer = (state, action) => {
     if (
       (action.event.keyCode < 65 || action.event.keyCode > 90) && //not a letter
       action.event.keyCode !== 9 && //not tab
+      action.event.keyCode !== 37 && //not left arrow
+      action.event.keyCode !== 38 && //not up arrow
       action.event.keyCode !== 39 && //not right arrow
-      action.event.keyCode !== 40
+      action.event.keyCode !== 40 //not down arrow
     ) {
       //not down arrow
       return {
@@ -195,6 +244,8 @@ const reducer = (state, action) => {
 
     if (
       action.event.keyCode !== 9 &&
+      action.event.keyCode !== 37 &&
+      action.event.keyCode !== 38 &&
       action.event.keyCode !== 39 &&
       action.event.keyCode !== 40
     ) {
@@ -205,6 +256,12 @@ const reducer = (state, action) => {
     state.cellData = clearCellDisplay(state);
 
     switch (action.event.keyCode) {
+      case 37: //left arrow
+        index = getPrevCell(state, index, "across");
+        break;
+      case 38: //up arrow
+        index = getPrevCell(state, index, "down");
+        break;
       case 39: //right arrow
         index = getNextCell(state, index, "across");
         break;
