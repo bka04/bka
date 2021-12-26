@@ -216,9 +216,8 @@ const reducer = (state, action) => {
         state.cellData = clearCellDisplay(state);
         state.cellData[index].focus = true;
         state.cellData = updateHighlighting(state, index);
-      } else {
-        state.cellData[index].value = "";
       }
+      state.cellData[index].value = "";
       return {
         cellData: state.cellData,
         selectedCell: index + 1,
@@ -229,10 +228,7 @@ const reducer = (state, action) => {
     if (
       (action.event.keyCode < 65 || action.event.keyCode > 90) && //not a letter
       action.event.keyCode !== 9 && //not tab
-      action.event.keyCode !== 37 && //not left arrow
-      action.event.keyCode !== 38 && //not up arrow
-      action.event.keyCode !== 39 && //not right arrow
-      action.event.keyCode !== 40 //not down arrow
+      (action.event.keyCode < 37 || action.event.keyCode > 40) //not left/up/right/down
     ) {
       //not down arrow
       return {
@@ -244,10 +240,7 @@ const reducer = (state, action) => {
 
     if (
       action.event.keyCode !== 9 &&
-      action.event.keyCode !== 37 &&
-      action.event.keyCode !== 38 &&
-      action.event.keyCode !== 39 &&
-      action.event.keyCode !== 40
+      (action.event.keyCode < 37 || action.event.keyCode > 40) //not left/up/right/down
     ) {
       //except for tab/arrow, set to keypress
       state.cellData[index].value = action.event.key;
