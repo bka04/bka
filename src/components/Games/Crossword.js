@@ -185,13 +185,14 @@ const getPrevCell = (state, index, directionOverride = "") => {
 };
 
 const reducer = (state, action) => {
+  action.event.preventDefault();
   const cellNum = parseInt(action.event.target.dataset.cellnum);
   let index = cellNum - 1;
 
   if (
     action.type === "mousedown" ||
     (action.type === "keydown" &&
-      (action.event.keyCode === 13 || action.event.keyCode === 32))
+      (action.event.keyCode === 13 || action.event.keyCode === 32)) //space/enter
   ) {
     if (cellNum === state.selectedCell) {
       state.across = !state.across;
@@ -207,7 +208,6 @@ const reducer = (state, action) => {
       across: state.across,
     };
   } else if (action.type === "keydown") {
-    action.event.preventDefault();
 
     if (action.event.keyCode === 8 || action.event.keyCode === 46) {
       //backspace/delete
