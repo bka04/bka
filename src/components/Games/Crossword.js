@@ -5,6 +5,8 @@ import CrosswordGrid from "./CrosswordGrid";
 const TOTALCELLS = 25;
 const COLS = 5;
 
+//Populate the across and down question numbers for each cell
+//Also determine which cells need to display a question number
 const populateNumbers = (data) => {
 
   const newDownWord = (i) => {
@@ -92,7 +94,6 @@ const clearCellDisplay = (state) => {
   }));
 };
 
-//is there a way to do shift tab too or not?
 const getNextCell = (state, index, directionOverride = "") => {
   if (
     (state.across || directionOverride === "across") &&
@@ -201,6 +202,9 @@ const reducer = (state, action) => {
     }
     
     localStorage.removeItem('crosswordData');
+    state.cellData = populateNumbers(DUMMYDATA)
+    state.across = true;
+    state.cellData = updateHighlighting(state, 0);
     return {
       cellData: populateNumbers(DUMMYDATA),
       selectedCell: 0,
@@ -333,7 +337,6 @@ const Crossword = (props) => {
   };
 
   const resetGrid = (event) => {
-
     if (window.confirm("Are you sure you want to reset the puzzle?")) {
       dispatch({ type: "resetGrid" });
     }
