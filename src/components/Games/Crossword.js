@@ -1,4 +1,5 @@
-import { useEffect, useReducer } from "react";
+import { Fragment, useEffect, useReducer } from "react";
+// import { Prompt } from "react-router-dom";
 import CrosswordGrid from "./CrosswordGrid";
 
 const TOTALCELLS = 25;
@@ -169,6 +170,10 @@ const getPrevCell = (state, index, directionOverride = "") => {
 
 const reducer = (state, action) => {
 
+  if (action.type === "loadStateFromStorage") {
+    return action.storedCrosswordData;
+  }
+
   if (action.type === "reset") {
     const DUMMYDATA = [];
     for (let i = 1; i < 26; i++) {
@@ -181,7 +186,7 @@ const reducer = (state, action) => {
       if (i === 8 || i === 14) {
         disabled = true;
       }
-    
+
       DUMMYDATA.push({
         id: i,
         disabled,
@@ -193,9 +198,8 @@ const reducer = (state, action) => {
       cellData: populateNumbers(DUMMYDATA),
       selectedCell: 0,
       across: true,
-    };; 
+    };
   }
-
 
   action.event.preventDefault();
   const cellNum = parseInt(action.event.target.dataset.cellnum);
@@ -214,13 +218,15 @@ const reducer = (state, action) => {
     state.cellData[index].focus = true;
     state.cellData = updateHighlighting(state, index);
 
-    return {
+    const crosswordData = {
       cellData: state.cellData,
       selectedCell: cellNum,
       across: state.across,
-    };
-  } else if (action.type === "keydown") {
+    }
+    localStorage.setItem('crosswordData', JSON.stringify(crosswordData));
+    return crosswordData;
 
+  } else if (action.type === "keydown") {
     if (action.event.keyCode === 8 || action.event.keyCode === 46) {
       //backspace/delete
       if (state.cellData[index].value === "") {
@@ -230,11 +236,14 @@ const reducer = (state, action) => {
         state.cellData = updateHighlighting(state, index);
       }
       state.cellData[index].value = "";
-      return {
+
+      const crosswordData = {
         cellData: state.cellData,
         selectedCell: index + 1,
         across: state.across,
       };
+      localStorage.setItem('crosswordData', JSON.stringify(crosswordData));
+      return crosswordData;
     }
 
     if (
@@ -242,12 +251,13 @@ const reducer = (state, action) => {
       action.event.keyCode !== 9 && //not tab
       (action.event.keyCode < 37 || action.event.keyCode > 40) //not left/up/right/down
     ) {
-      //not down arrow
-      return {
+      const crosswordData = {
         cellData: state.cellData,
         selectedCell: state.selectedCell,
         across: state.across,
       };
+      localStorage.setItem('crosswordData', JSON.stringify(crosswordData));
+      return crosswordData;
     }
 
     if (
@@ -280,11 +290,14 @@ const reducer = (state, action) => {
     state.cellData[index].focus = true;
     state.cellData = updateHighlighting(state, index);
 
-    return {
+    const crosswordData = {
       cellData: state.cellData,
       selectedCell: index + 1,
       across: state.across,
     };
+    localStorage.setItem('crosswordData', JSON.stringify(crosswordData));
+    return crosswordData;
+    
   } else {
     throw new Error();
   }
@@ -294,7 +307,14 @@ const Crossword = (props) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
-    dispatch({ type: "reset"});
+    const storedCrosswordData = JSON.parse(localStorage.getItem('crosswordData'));
+
+    if (storedCrosswordData !== null) {
+      dispatch({type: "loadStateFromStorage", storedCrosswordData})
+    } else {
+      dispatch({ type: "reset" });
+    }
+
   }, []);
 
   const onKeyDownHandler = (event) => {
@@ -306,11 +326,14 @@ const Crossword = (props) => {
   };
 
   return (
-    <CrosswordGrid
-      cellData={state.cellData}
-      onKeyDown={onKeyDownHandler}
-      onMouseDown={onMouseDownHandler}
-    />
+    <Fragment>
+      {/* <Prompt message={(location) => 'Are you sure you want to leave? Crossword data will be reset!'} /> */}
+      <CrosswordGrid
+        cellData={state.cellData}
+        onKeyDown={onKeyDownHandler}
+        onMouseDown={onMouseDownHandler}
+      />
+    </Fragment>
   );
 };
 

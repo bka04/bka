@@ -18,12 +18,13 @@ const CrosswordCell = (props) => {
         type="text"
         size="1"
         maxLength="1"
-        defaultValue={props.cellValue}
+        value={props.cellValue}
         disabled={props.disabled}
         data-cellnum={props["data-cellnum"]}
         onKeyDown={props.onKeyDown}
         onMouseDown={props.onMouseDown}
         ref={cellInput}
+        readOnly
       />
     </div>
   );
