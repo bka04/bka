@@ -8,7 +8,6 @@ const COLS = 5;
 //Populate the across and down question numbers for each cell
 //Also determine which cells need to display a question number
 const populateNumbers = (data) => {
-
   const newDownWord = (i) => {
     if (i - COLS < 0) {
       return true; //top row will have new numbers
@@ -17,7 +16,7 @@ const populateNumbers = (data) => {
       return true; //if cell above is disabled, need new number
     }
     return false;
-  }
+  };
 
   const newAcrossWord = (i) => {
     if (i - 1 < 0) {
@@ -26,11 +25,11 @@ const populateNumbers = (data) => {
     if (i % COLS === 0) {
       return true; //first column needs new numbers
     }
-    if (data[i-1].disabled) {
+    if (data[i - 1].disabled) {
       return true; //if cell to the left is disabled, need new number
     }
     return false;
-  }
+  };
 
   let questionNum = 0;
 
@@ -59,7 +58,6 @@ const populateNumbers = (data) => {
     } else {
       data[i].questionNumberAcross = data[i - 1].questionNumberAcross; //Get down number for cell to the left
     }
-
   }
 
   return data;
@@ -72,15 +70,16 @@ const initialState = {
 };
 
 const updateHighlighting = (state, index) => {
-
-  const questionNumberProp = state.across ? 'questionNumberAcross' : 'questionNumberDown';
+  const questionNumberProp = state.across
+    ? "questionNumberAcross"
+    : "questionNumberDown";
   const currentQuestion = state.cellData[index][questionNumberProp];
 
   state.cellData.forEach((el, index) => {
     if (el[questionNumberProp] === currentQuestion) {
       state.cellData[index].highlight = true;
     }
-  })
+  });
 
   return state.cellData;
 };
@@ -172,8 +171,29 @@ const getPrevCell = (state, index, directionOverride = "") => {
   return index;
 };
 
-const reducer = (state, action) => {
+const getNextWord = (state, index) => {
+  const questionNumberProp = state.across
+  ? "questionNumberAcross"
+  : "questionNumberDown";
+  const currentQuestionNumber = state.cellData[index][questionNumberProp];
 
+  const maxQuestionNumber = Math.max.apply(null, state.cellData.map(cell => cell[questionNumberProp] ? cell[questionNumberProp] : 0));
+  
+  if (currentQuestionNumber === maxQuestionNumber) { //if already at the highest down or across question number, get the lowest
+    const minQuestionNumber = Math.min.apply(null, state.cellData.map(cell => cell[questionNumberProp] ? cell[questionNumberProp] : 999));
+    return state.cellData.findIndex(x => x[questionNumberProp] === minQuestionNumber);
+  }
+
+  for (let q = currentQuestionNumber + 1; q <= maxQuestionNumber; q++) {
+    const newIndex = state.cellData.findIndex(x => x[questionNumberProp] === q);
+    if (newIndex > -1) {
+      return newIndex; //return if valid. Otherwise, add 1 and try again.
+    }
+  }
+
+}
+
+const reducer = (state, action) => {
   if (action.type === "loadStateFromStorage") {
     return action.storedCrosswordData;
   }
@@ -181,7 +201,6 @@ const reducer = (state, action) => {
   if (action.type === "resetGrid") {
     const DUMMYDATA = [];
     for (let i = 1; i < 26; i++) {
-      
       let focus = false;
       if (i === 1) {
         focus = true;
@@ -200,9 +219,9 @@ const reducer = (state, action) => {
         value: "",
       });
     }
-    
-    localStorage.removeItem('crosswordData');
-    state.cellData = populateNumbers(DUMMYDATA)
+
+    localStorage.removeItem("crosswordData");
+    state.cellData = populateNumbers(DUMMYDATA);
     state.across = true;
     state.cellData = updateHighlighting(state, 0);
     return {
@@ -210,7 +229,7 @@ const reducer = (state, action) => {
       selectedCell: 0,
       across: true,
     };
-  }
+  } //end resetGrid
 
   action.event.preventDefault();
   const cellNum = parseInt(action.event.target.dataset.cellnum);
@@ -233,10 +252,9 @@ const reducer = (state, action) => {
       cellData: state.cellData,
       selectedCell: cellNum,
       across: state.across,
-    }
-    localStorage.setItem('crosswordData', JSON.stringify(crosswordData));
-    return crosswordData;
-
+    };
+    localStorage.setItem("crosswordData", JSON.stringify(crosswordData));
+    return crosswordData; //end click (mousedown) or space/enter keydown
   } else if (action.type === "keydown") {
     if (action.event.keyCode === 8 || action.event.keyCode === 46) {
       //backspace/delete
@@ -253,29 +271,30 @@ const reducer = (state, action) => {
         selectedCell: index + 1,
         across: state.across,
       };
-      localStorage.setItem('crosswordData', JSON.stringify(crosswordData));
+      localStorage.setItem("crosswordData", JSON.stringify(crosswordData));
       return crosswordData;
-    }
+    } //end backspace/delete
 
     if (
       (action.event.keyCode < 65 || action.event.keyCode > 90) && //not a letter
       action.event.keyCode !== 9 && //not tab
       (action.event.keyCode < 37 || action.event.keyCode > 40) //not left/up/right/down
     ) {
+      //not a valid input; return without any changes
       const crosswordData = {
         cellData: state.cellData,
         selectedCell: state.selectedCell,
         across: state.across,
       };
-      localStorage.setItem('crosswordData', JSON.stringify(crosswordData));
+      localStorage.setItem("crosswordData", JSON.stringify(crosswordData));
       return crosswordData;
     }
 
     if (
-      action.event.keyCode !== 9 &&
+      action.event.keyCode !== 9 && //not tab
       (action.event.keyCode < 37 || action.event.keyCode > 40) //not left/up/right/down
     ) {
-      //except for tab/arrow, set to keypress
+      //a letter was entered; set to keypress
       state.cellData[index].value = action.event.key;
     }
 
@@ -294,7 +313,10 @@ const reducer = (state, action) => {
       case 40: //down arrow
         index = getNextCell(state, index, "down");
         break;
-      default:
+      case 9: //tab
+        index = getNextWord(state, index);
+        break;
+      default: //letter
         index = getNextCell(state, index);
     }
 
@@ -306,9 +328,8 @@ const reducer = (state, action) => {
       selectedCell: index + 1,
       across: state.across,
     };
-    localStorage.setItem('crosswordData', JSON.stringify(crosswordData));
-    return crosswordData;
-    
+    localStorage.setItem("crosswordData", JSON.stringify(crosswordData));
+    return crosswordData; //end keydown
   } else {
     throw new Error();
   }
@@ -318,14 +339,15 @@ const Crossword = (props) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
-    const storedCrosswordData = JSON.parse(localStorage.getItem('crosswordData'));
+    const storedCrosswordData = JSON.parse(
+      localStorage.getItem("crosswordData")
+    );
 
     if (storedCrosswordData !== null) {
-      dispatch({type: "loadStateFromStorage", storedCrosswordData})
+      dispatch({ type: "loadStateFromStorage", storedCrosswordData });
     } else {
       dispatch({ type: "resetGrid" });
     }
-
   }, []);
 
   const onKeyDownHandler = (event) => {
@@ -349,7 +371,9 @@ const Crossword = (props) => {
         onKeyDown={onKeyDownHandler}
         onMouseDown={onMouseDownHandler}
       />
-      <Button className='resetBtn' onClick={resetGrid}>Reset</Button>
+      <Button className="resetBtn" onClick={resetGrid}>
+        Reset
+      </Button>
     </Fragment>
   );
 };
