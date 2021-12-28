@@ -341,7 +341,7 @@ const Crossword = (props) => {
         onKeyDown={onKeyDownHandler}
         onMouseDown={onMouseDownHandler}
       />
-      <Button className='resetBtn' onClick={resetGrid}>Reset grid</Button>
+      <Button className='resetBtn' onClick={resetGrid}>Reset</Button>
     </Fragment>
   );
 };
