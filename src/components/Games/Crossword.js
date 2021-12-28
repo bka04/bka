@@ -70,53 +70,16 @@ const initialState = {
 };
 
 const updateHighlighting = (state, index) => {
-  const cellNum = index + 1;
-  if (!state.cellData[index].disabled) {
-    state.cellData[index].highlight = true;
-  }
-  if (state.across) {
-    //highlight letters in same word (across)
-    //first, check to the right
-    index++;
-    while (index % COLS > 0) {
-      if (state.cellData[index].disabled) {
-        break;
-      }
+
+  const questionNumberProp = state.across ? 'questionNumberAcross' : 'questionNumberDown';
+  const currentQuestion = state.cellData[index][questionNumberProp];
+
+  state.cellData.forEach((el, index) => {
+    if (el[questionNumberProp] === currentQuestion) {
       state.cellData[index].highlight = true;
-      index++;
     }
-    //second, check to the left
-    index = cellNum - 1;
-    index--;
-    while (index % COLS !== COLS - 1 && index >= 0) {
-      if (state.cellData[index].disabled) {
-        break;
-      }
-      state.cellData[index].highlight = true;
-      index--;
-    }
-  } else {
-    //highlight letters in same word (down)
-    //first, check below
-    index += COLS;
-    while (index < TOTALCELLS) {
-      if (state.cellData[index].disabled) {
-        break;
-      }
-      state.cellData[index].highlight = true;
-      index += COLS;
-    }
-    //second, check above
-    index = cellNum - 1;
-    index -= COLS;
-    while (index >= 0) {
-      if (state.cellData[index].disabled) {
-        break;
-      }
-      state.cellData[index].highlight = true;
-      index -= COLS;
-    }
-  }
+  })
+
   return state.cellData;
 };
 
@@ -217,11 +180,13 @@ const reducer = (state, action) => {
   if (action.type === "resetGrid") {
     const DUMMYDATA = [];
     for (let i = 1; i < 26; i++) {
-      //TESTING
+      
       let focus = false;
       if (i === 1) {
         focus = true;
       }
+
+      //TESTING
       let disabled = false;
       if (i === 8 || i === 14) {
         disabled = true;
