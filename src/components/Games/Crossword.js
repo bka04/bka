@@ -6,19 +6,44 @@ const TOTALCELLS = 25;
 const COLS = 5;
 
 const populateNumbers = (data) => {
-  //   Go across (increment by one). Check:
-  // Down:
-  //   1) cell below (plus COLS) is not disabled and not greater than TOTALCELLS
-  //   2) cell above (minus COLS) IS disabled OR less than zero
-  // Across:
-  //   1) cell right is not disabled and not past end of row
-  //   2) cell left IS disabled OR beginning of row
 
-  // let questionNumber = 1;
-  // for (let i = 0; i < data.length; i++) {
-  //   //check down
-  //   if (!data[i + COLS].disabled && data[i + COLS]
-  // }
+  const newDownWord = (i) => {
+    if (i - COLS < 0) {
+      return true; //top row will have new numbers
+    }
+    if (data[i - COLS].disabled) {
+      return true; //if cell above is disabled, need new number
+    }
+    return false;
+  }
+
+  const newAcrossWord = (i) => {
+    if (i - 1 < 0) {
+      return true; //first cell needs new number
+    }
+    if (i % COLS === 0) {
+      return true; //first column needs new numbers
+    }
+    if (data[i-1].disabled) {
+      return true; //if cell to the left is disabled, need new number
+    }
+    return false;
+  }
+
+  let questionNum = 0;
+
+  for (let i = 0; i < data.length; i++) {
+    data[i].displayQuestionNumber = false;
+
+    if (data[i].disabled) {
+      continue;
+    }
+    if (newDownWord(i) || newAcrossWord(i)) {
+      questionNum++;
+      data[i].displayQuestionNumber = true;
+    }
+    data[i].questionNumber = questionNum;
+  }
 
   return data;
 };
