@@ -1,5 +1,5 @@
 import { Fragment, useEffect, useReducer } from "react";
-// import { Prompt } from "react-router-dom";
+import Button from "../UI/Button";
 import CrosswordGrid from "./CrosswordGrid";
 
 const TOTALCELLS = 25;
@@ -174,7 +174,7 @@ const reducer = (state, action) => {
     return action.storedCrosswordData;
   }
 
-  if (action.type === "reset") {
+  if (action.type === "resetGrid") {
     const DUMMYDATA = [];
     for (let i = 1; i < 26; i++) {
       //TESTING
@@ -194,6 +194,8 @@ const reducer = (state, action) => {
         value: "",
       });
     }
+    
+    localStorage.removeItem('crosswordData');
     return {
       cellData: populateNumbers(DUMMYDATA),
       selectedCell: 0,
@@ -312,7 +314,7 @@ const Crossword = (props) => {
     if (storedCrosswordData !== null) {
       dispatch({type: "loadStateFromStorage", storedCrosswordData})
     } else {
-      dispatch({ type: "reset" });
+      dispatch({ type: "resetGrid" });
     }
 
   }, []);
@@ -325,14 +327,21 @@ const Crossword = (props) => {
     dispatch({ type: "mousedown", event });
   };
 
+  const resetGrid = (event) => {
+
+    if (window.confirm("Are you sure you want to reset the puzzle?")) {
+      dispatch({ type: "resetGrid" });
+    }
+  };
+
   return (
     <Fragment>
-      {/* <Prompt message={(location) => 'Are you sure you want to leave? Crossword data will be reset!'} /> */}
       <CrosswordGrid
         cellData={state.cellData}
         onKeyDown={onKeyDownHandler}
         onMouseDown={onMouseDownHandler}
       />
+      <Button className='resetBtn' onClick={resetGrid}>Reset grid</Button>
     </Fragment>
   );
 };

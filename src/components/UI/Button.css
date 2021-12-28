@@ -1,4 +1,4 @@
-.headerBtnNav {
+.resetBtn {
   color: black;
   text-align: center;
   padding: 14px 16px;
@@ -7,13 +7,17 @@
   border-radius: 14px;
 }
 
-.headerBtnNav:hover {
+.resetBtn:hover {
   background-color: #ddd;
   color: black;
   cursor: pointer;
 }
 
-.headerBtnNav.active {
+.resetBtn.active {
   background-color: lightblue;
   color: black;
+}
+
+.resetBtn {
+  margin-top: 50px;
 }
