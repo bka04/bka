@@ -33,16 +33,31 @@ const populateNumbers = (data) => {
   let questionNum = 0;
 
   for (let i = 0; i < data.length; i++) {
-    data[i].displayQuestionNumber = false;
+    data[i].questionNumberDisplayed = 0;
 
     if (data[i].disabled) {
       continue;
     }
-    if (newDownWord(i) || newAcrossWord(i)) {
+
+    const newDown = newDownWord(i);
+    const newAcross = newAcrossWord(i);
+
+    if (newDown || newAcross) {
       questionNum++;
-      data[i].displayQuestionNumber = true;
+      data[i].questionNumberDisplayed = questionNum; //Set number to be displayed in cell
     }
-    data[i].questionNumber = questionNum;
+
+    if (newDown) {
+      data[i].questionNumberDown = questionNum; //New down number
+    } else {
+      data[i].questionNumberDown = data[i - COLS].questionNumberDown; //Get down number for cell above
+    }
+    if (newAcross) {
+      data[i].questionNumberAcross = questionNum; //New across number
+    } else {
+      data[i].questionNumberAcross = data[i - 1].questionNumberAcross; //Get down number for cell to the left
+    }
+
   }
 
   return data;
