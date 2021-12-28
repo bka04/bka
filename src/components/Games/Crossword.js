@@ -1,25 +1,8 @@
-import { useReducer } from "react";
+import { useEffect, useReducer } from "react";
 import CrosswordGrid from "./CrosswordGrid";
-
-const DUMMYDATA = [];
 
 const TOTALCELLS = 25;
 const COLS = 5;
-
-for (let i = 1; i < 26; i++) {
-  //TESTING
-  let disabled = false;
-  if (i === 8) {
-    disabled = true;
-  }
-
-  DUMMYDATA.push({
-    id: i,
-    disabled,
-    focus: false,
-    value: "",
-  });
-}
 
 const populateNumbers = (data) => {
   //   Go across (increment by one). Check:
@@ -40,7 +23,7 @@ const populateNumbers = (data) => {
 };
 
 const initialState = {
-  cellData: populateNumbers(DUMMYDATA),
+  cellData: [],
   selectedCell: 0,
   across: true,
 };
@@ -185,6 +168,35 @@ const getPrevCell = (state, index, directionOverride = "") => {
 };
 
 const reducer = (state, action) => {
+
+  if (action.type === "reset") {
+    const DUMMYDATA = [];
+    for (let i = 1; i < 26; i++) {
+      //TESTING
+      let focus = false;
+      if (i === 1) {
+        focus = true;
+      }
+      let disabled = false;
+      if (i === 8 || i === 14) {
+        disabled = true;
+      }
+    
+      DUMMYDATA.push({
+        id: i,
+        disabled,
+        focus,
+        value: "",
+      });
+    }
+    return {
+      cellData: populateNumbers(DUMMYDATA),
+      selectedCell: 0,
+      across: true,
+    };; 
+  }
+
+
   action.event.preventDefault();
   const cellNum = parseInt(action.event.target.dataset.cellnum);
   let index = cellNum - 1;
@@ -281,7 +293,9 @@ const reducer = (state, action) => {
 const Crossword = (props) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  console.log("rendered Crossword");
+  useEffect(() => {
+    dispatch({ type: "reset"});
+  }, []);
 
   const onKeyDownHandler = (event) => {
     dispatch({ type: "keydown", event });
