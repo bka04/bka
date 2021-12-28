@@ -1,43 +1,35 @@
+import { NavLink } from "react-router-dom";
+
 import classes from "./Header.module.css";
 
-import Button from "../UI/Button";
-
-const CATEGORIES = [
-  {
-    category: "Author",
-  },
-  {
-    category: "Acrobat",
-  },
-  {
-    category: "Developer",
-  },
-  {
-    category: "Games",
-  },
-];
-
 const Header = (props) => {
-  const onClickHandler = (btn) => {
-    props.onContentChange(btn.currentTarget.innerHTML);
-  };
-
   return (
-    <nav className={classes.topnav}>
-      {CATEGORIES.map((obj) => (
-        <Button
-          key={obj.category}
-          onClick={onClickHandler}
-          className={
-            props.activeContent === obj.category
-              ? "headerBtnNav active"
-              : "headerBtnNav"
-          }
-        >
-          {obj.category}
-        </Button>
-      ))}
-    </nav>
+    <header>
+      <nav className={classes.nav}>
+        <ul>
+          <li>
+            <NavLink to="/author" activeClassName={classes.active}>
+              Author
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/games" activeClassName={classes.active}>
+              Games
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/acrobat" activeClassName={classes.active}>
+              Acrobat
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/developer" activeClassName={classes.active}>
+              Developer
+            </NavLink>
+          </li>
+        </ul>
+      </nav>
+    </header>
   );
 };
 
