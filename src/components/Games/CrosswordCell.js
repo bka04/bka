@@ -26,6 +26,7 @@ const CrosswordCell = (props) => {
         ref={cellInput}
         readOnly
       />
+      <span className='questionNumber'>{props.questionNumberDisplayed ? props.questionNumberDisplayed : ''}</span>
     </div>
   );
 };

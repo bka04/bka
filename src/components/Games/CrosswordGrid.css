@@ -16,7 +16,7 @@
   text-transform: capitalize;
 }
 .cell input:focus {
-  background-color: lightgray;
+  background-color: rgb(200, 200, 200);
 }
 .cell input:disabled {
   background-color: black;
@@ -24,5 +24,17 @@
 
 .cellHighlight {
   background-color: rgb(233, 233, 233);
-  /* background-color: yellow; */
+}
+
+.cell {
+  position: relative;
+}
+
+.questionNumber {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin-top: -2px;
+  padding: 0px 0px 0px 1px;
+  font-size: 12px;
 }

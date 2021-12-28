@@ -2,7 +2,7 @@ import "./CrosswordGrid.css";
 import CrosswordCell from "./CrosswordCell";
 
 const CrosswordGrid = (props) => {
-  
+
   return (
   <div className="crossword">
     {props.cellData.map((cell) => (
@@ -13,6 +13,7 @@ const CrosswordGrid = (props) => {
       key={cell.id}
       focus={cell.focus}
       cellValue={cell.value}
+      questionNumberDisplayed={cell.questionNumberDisplayed}
       onKeyDown={props.onKeyDown}
       onMouseDown={props.onMouseDown}
     />
