@@ -1,7 +1,7 @@
 import { Route, Redirect, Switch } from "react-router-dom";
 
 import Header from "./components/Layout/Header";
-import Author from "./components/Author/Author";
+import Books from "./components/Books/Books";
 import Games from "./components/Games/Games";
 
 function App() {
@@ -10,19 +10,19 @@ function App() {
       <Header />
       <Switch>
         <Route path="/" exact>
-          <Redirect to="/Author" />
+          <Redirect to="/books" />
         </Route>
-        <Route path="/author">
-          <Author />
+        <Route path="/books">
+          <Books />
         </Route>
         <Route path="/games">
           <Games />
         </Route>
-        <Route path="/acrobat">
-          <p>Acrobat stuff coming soon</p>
+        <Route path="/acrobatics">
+          <p>Acrobatics stuff coming soon</p>
         </Route>
-        <Route path="/developer">
-          <p>Developer stuff coming soon</p>
+        <Route path="/development">
+          <p>Development stuff coming soon</p>
         </Route>
         <Route path='*'>
           <p>Path not found</p>

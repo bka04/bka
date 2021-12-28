@@ -2,7 +2,7 @@ import { useState } from "react";
 import Card from "../UI/Card";
 import BookList from "./BookList";
 import BookDetails from "./BookDetails";
-import classes from "./Author.module.css";
+import classes from "./Books.module.css";
 
 const BOOKS = [
   {

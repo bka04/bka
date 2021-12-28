@@ -27,6 +27,14 @@
   text-align: center;
 }
 
+.detailHeading > h3 {
+  margin: 15px 0px 2px;
+}
+
+.detailHeading > h5 {
+  margin: 0px 0px 6px;
+}
+
 @media (max-width: 700px) {
   .bookCover {
     display: none;

@@ -8,8 +8,8 @@ const Header = (props) => {
       <nav className={classes.nav}>
         <ul>
           <li>
-            <NavLink to="/author" activeClassName={classes.active}>
-              Author
+            <NavLink to="/books" activeClassName={classes.active}>
+              Books
             </NavLink>
           </li>
           <li>
@@ -18,13 +18,13 @@ const Header = (props) => {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/acrobat" activeClassName={classes.active}>
-              Acrobat
+            <NavLink to="/acrobatics" activeClassName={classes.active}>
+              Acrobatics
             </NavLink>
           </li>
           <li>
-            <NavLink to="/developer" activeClassName={classes.active}>
-              Developer
+            <NavLink to="/development" activeClassName={classes.active}>
+              Web Development
             </NavLink>
           </li>
         </ul>

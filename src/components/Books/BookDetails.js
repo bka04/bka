@@ -25,6 +25,7 @@ const BookDetails = (props) => {
         <div className={classes.details}>
           <div className={classes.detailHeading}>
             <h3>{book.title}</h3>
+            <h5>by Brent Aronsen</h5>
             <a href={book.amazonURL} target="_blank" rel="noreferrer">
               {`Buy now on Amazon!`}
               <span className="material-icons">open_in_new</span>
