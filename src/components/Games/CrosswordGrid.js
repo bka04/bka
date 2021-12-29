@@ -3,8 +3,8 @@ import CrosswordCell from "./CrosswordCell";
 
 const CrosswordGrid = (props) => {
 
-  const style = {'grid-template-rows': `repeat(${props.cols}, 40px)`,
-  'grid-template-columns': `repeat(${props.cols}, 40px)`}
+  const style = {'gridTemplateRows': `repeat(${props.cols}, 40px)`,
+  'gridTemplateColumns': `repeat(${props.cols}, 40px)`}
 
   return (
   <div className="crossword" style={style}>
