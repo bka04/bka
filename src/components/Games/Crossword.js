@@ -414,20 +414,17 @@ const Crossword = (props) => {
 
   const getSelectedQuestionNumber = (state, direction) => {
     const index = state.cellData.findIndex((cell) => cell.id === state.selectedCell);
-    if (index > -1) {
-      return state.cellData[index][`questionNumber${direction}`];
-    } else {
-      return 0;
-    }
+    return (index > -1) ? state.cellData[index][`questionNumber${direction}`] : 0;
+
   };
 
   const getSelectedQuestionText = (number, direction) => {
     if (direction === 'Across') {
       const index = props.acrossClues.findIndex((clue) => clue.number === number);
-      return props.acrossClues[index].text;
+      return (index > -1) ? props.acrossClues[index].text : '';
     } else {
       const index = props.downClues.findIndex((clue) => clue.number === number);
-      return props.downClues[index].text;
+      return (index > -1) ? props.downClues[index].text : '';
     }
   }
 
