@@ -4,6 +4,7 @@ import Card from "../UI/Card";
 import CrosswordClues from "./CrosswordClues";
 import CrosswordGrid from "./CrosswordGrid";
 import './Crossword.css';
+import CrosswordActiveClue from "./CrosswordActiveClue";
 
 
 //Populate the across and down question numbers for each cell
@@ -411,7 +412,7 @@ const Crossword = (props) => {
     }
   };
 
-  const getSelectedQuestion = (state, direction) => {
+  const getSelectedQuestionNumber = (state, direction) => {
     const index = state.cellData.findIndex((cell) => cell.id === state.selectedCell);
     if (index > -1) {
       return state.cellData[index][`questionNumber${direction}`];
@@ -420,33 +421,48 @@ const Crossword = (props) => {
     }
   };
 
+  const getSelectedQuestionText = (number, direction) => {
+    if (direction === 'Across') {
+      const index = props.acrossClues.findIndex((clue) => clue.number === number);
+      return props.acrossClues[index].text;
+    } else {
+      const index = props.downClues.findIndex((clue) => clue.number === number);
+      return props.downClues[index].text;
+    }
+  }
+
   return (
     <Fragment>
       <div className='crosswordContent'>
-        <Card className='dark crosswordCard'>
+        <Card className='dark crosswordCluesCard'>
           <CrosswordClues 
             onClick={clueOnClickHandler}
             clueDirection='Across' 
             clues={props.acrossClues}
             selectedDirection={state.across ? 'Across' : 'Down'}
-            selectedQuestion={getSelectedQuestion(state, 'Across')}
+            selectedQuestion={getSelectedQuestionNumber(state, 'Across')}
           />
         </Card>
-        <Card className='dark'>
+        <Card className='dark crosswordGridCard'>
           <CrosswordGrid
             cellData={state.cellData}
             cols={state.cols}
             onKeyDown={onKeyDownHandler}
             onMouseDown={onMouseDownHandler}
           />
+          <CrosswordActiveClue 
+            text={getSelectedQuestionText(
+              getSelectedQuestionNumber(state, `${state.across ? 'Across' : 'Down'}`),
+              `${state.across ? 'Across' : 'Down'}`)} 
+          />
         </Card>
-        <Card className='dark crosswordCard'>
+        <Card className='dark crosswordCluesCard'>
           <CrosswordClues 
             onClick={clueOnClickHandler}
             clueDirection='Down' 
             clues={props.downClues}
             selectedDirection={state.across ? 'Across' : 'Down'}
-            selectedQuestion={getSelectedQuestion(state, 'Down')}
+            selectedQuestion={getSelectedQuestionNumber(state, 'Down')}
           />
         </Card>
       </div>

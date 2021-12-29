@@ -5,6 +5,10 @@
   align-items: flex-start;
 }
 
-.crosswordCard {
+.crosswordCluesCard {
   flex: 0 1 400px;
+}
+
+.crosswordGridCard {
+  flex: 0 1;
 }
