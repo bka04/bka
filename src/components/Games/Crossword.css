@@ -12,3 +12,16 @@
 .crosswordGridCard {
   flex: 0 1;
 }
+
+@media (max-width: 650px) {
+  .crosswordGridCard {
+    order: -1;
+  }
+}
+
+@media (max-width: 650px) {
+  .crosswordContent {
+    flex-wrap: wrap;
+    gap: 0px;
+  }
+}
