@@ -362,11 +362,25 @@ const Crossword = (props) => {
     }
   };
 
+  const getSelectedQuestion = (state, direction) => {
+    const index = state.cellData.findIndex((cell) => cell.id === state.selectedCell);
+    if (index > -1) {
+      return state.cellData[index][`questionNumber${direction}`];
+    } else {
+      return 0;
+    }
+  }
+
   return (
     <Fragment>
       <div className='crosswordContent'>
         <Card className='dark crosswordCard'>
-          <CrosswordClues direction='Across' clues={props.acrossClues} />
+          <CrosswordClues 
+            clueDirection='Across' 
+            clues={props.acrossClues}
+            selectedDirection={state.across ? 'Across' : 'Down'}
+            selectedQuestion={getSelectedQuestion(state, 'Across')}
+          />
         </Card>
         <Card className='dark'>
           <CrosswordGrid
@@ -377,7 +391,12 @@ const Crossword = (props) => {
           />
         </Card>
         <Card className='dark crosswordCard'>
-          <CrosswordClues direction='Down' clues={props.downClues} />
+          <CrosswordClues 
+            clueDirection='Down' 
+            clues={props.downClues}
+            selectedDirection={state.across ? 'Across' : 'Down'}
+            selectedQuestion={getSelectedQuestion(state, 'Down')}
+          />
         </Card>
       </div>
       <Button className="resetBtn" onClick={resetGrid}>

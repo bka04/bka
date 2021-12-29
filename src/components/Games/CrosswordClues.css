@@ -13,3 +13,7 @@
   color: #bdc1c6;
   text-align: center;
 }
+
+.clueList > li.highlight {
+  color: #88dfdf;
+}
