@@ -1,0 +1,8 @@
+.clueList {
+  list-style: none;
+  margin: 5px;
+}
+
+.clues > h4 {
+  margin: 5px;
+}

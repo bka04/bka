@@ -1,6 +1,10 @@
 import { Fragment, useEffect, useReducer } from "react";
 import Button from "../UI/Button";
+import Card from "../UI/Card";
+import CrosswordClues from "./CrosswordClues";
 import CrosswordGrid from "./CrosswordGrid";
+import classes from './Crossword.module.css';
+
 
 const TOTALCELLS = 25;
 const COLS = 5;
@@ -206,11 +210,11 @@ const reducer = (state, action) => {
         focus = true;
       }
 
-      //TESTING
       let disabled = false;
-      if (i === 8 || i === 14) {
-        disabled = true;
-      }
+      //TESTING
+      // if (i === 8 || i === 14) {
+      //   disabled = true;
+      // }
 
       DUMMYDATA.push({
         id: i,
@@ -366,11 +370,14 @@ const Crossword = (props) => {
 
   return (
     <Fragment>
-      <CrosswordGrid
-        cellData={state.cellData}
-        onKeyDown={onKeyDownHandler}
-        onMouseDown={onMouseDownHandler}
-      />
+      <div className={classes.crosswordContent}>
+        <CrosswordGrid
+          cellData={state.cellData}
+          onKeyDown={onKeyDownHandler}
+          onMouseDown={onMouseDownHandler}
+        />
+        <Card><CrosswordClues /></Card>
+      </div>
       <Button className="resetBtn" onClick={resetGrid}>
         Reset
       </Button>
