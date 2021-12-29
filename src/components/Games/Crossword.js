@@ -6,12 +6,11 @@ import CrosswordGrid from "./CrosswordGrid";
 import classes from './Crossword.module.css';
 
 
-const TOTALCELLS = 25;
-const COLS = 5;
-
 //Populate the across and down question numbers for each cell
 //Also determine which cells need to display a question number
 const populateNumbers = (data) => {
+  const COLS = Math.sqrt(data.length);
+
   const newDownWord = (i) => {
     if (i - COLS < 0) {
       return true; //top row will have new numbers
@@ -20,7 +19,7 @@ const populateNumbers = (data) => {
       return true; //if cell above is disabled, need new number
     }
     return false;
-  };
+  }; //end newDownWord
 
   const newAcrossWord = (i) => {
     if (i - 1 < 0) {
@@ -33,7 +32,7 @@ const populateNumbers = (data) => {
       return true; //if cell to the left is disabled, need new number
     }
     return false;
-  };
+  }; //end newAcrossWord
 
   let questionNum = 0;
 
@@ -65,12 +64,13 @@ const populateNumbers = (data) => {
   }
 
   return data;
-};
+}; //end populateNumbers
 
 const initialState = {
   cellData: [],
   selectedCell: 0,
   across: true,
+  cols: 0
 };
 
 const updateHighlighting = (state, index) => {
@@ -98,6 +98,7 @@ const clearCellDisplay = (state) => {
 };
 
 const getNextCell = (state, index, directionOverride = "") => {
+  const TOTALCELLS = Math.pow(state.cols, 2);
   if (
     (state.across || directionOverride === "across") &&
     directionOverride !== "down"
@@ -117,8 +118,8 @@ const getNextCell = (state, index, directionOverride = "") => {
     }
   } else {
     //down
-    index += COLS;
-    if (index === TOTALCELLS - 1 + COLS) {
+    index += state.cols;
+    if (index === TOTALCELLS - 1 + state.cols) {
       index = 0;
     } else if (index > TOTALCELLS - 1) {
       index -= TOTALCELLS - 1;
@@ -127,7 +128,7 @@ const getNextCell = (state, index, directionOverride = "") => {
       if (!state.cellData[index].disabled) {
         break;
       }
-      index += COLS;
+      index += state.cols;
       if (index > TOTALCELLS - 1) {
         index -= TOTALCELLS - 1;
       }
@@ -137,6 +138,7 @@ const getNextCell = (state, index, directionOverride = "") => {
 };
 
 const getPrevCell = (state, index, directionOverride = "") => {
+  const TOTALCELLS = Math.pow(state.cols, 2);
   if (
     (state.across || directionOverride === "across") &&
     directionOverride !== "down"
@@ -156,8 +158,8 @@ const getPrevCell = (state, index, directionOverride = "") => {
     }
   } else {
     //down
-    index -= COLS;
-    if (index === 0 - COLS) {
+    index -= state.cols;
+    if (index === 0 - state.cols) {
       index = TOTALCELLS - 1;
     } else if (index < 0) {
       index += TOTALCELLS - 1;
@@ -166,7 +168,7 @@ const getPrevCell = (state, index, directionOverride = "") => {
       if (!state.cellData[index].disabled) {
         break;
       }
-      index -= COLS;
+      index -= state.cols;
       if (index < 0) {
         index += TOTALCELLS - 1;
       }
@@ -232,6 +234,7 @@ const reducer = (state, action) => {
       cellData: state.cellData,
       selectedCell: 0,
       across: true,
+      cols: Math.sqrt(state.cellData.length),
     };
   } //end resetGrid
 
@@ -256,6 +259,7 @@ const reducer = (state, action) => {
       cellData: state.cellData,
       selectedCell: cellNum,
       across: state.across,
+      cols: state.cols,
     };
     localStorage.setItem("crosswordData", JSON.stringify(crosswordData));
     return crosswordData; //end click (mousedown) or space/enter keydown
@@ -274,6 +278,7 @@ const reducer = (state, action) => {
         cellData: state.cellData,
         selectedCell: index + 1,
         across: state.across,
+        cols: state.cols
       };
       localStorage.setItem("crosswordData", JSON.stringify(crosswordData));
       return crosswordData;
@@ -289,6 +294,7 @@ const reducer = (state, action) => {
         cellData: state.cellData,
         selectedCell: state.selectedCell,
         across: state.across,
+        cols: state.cols
       };
       localStorage.setItem("crosswordData", JSON.stringify(crosswordData));
       return crosswordData;
@@ -331,6 +337,7 @@ const reducer = (state, action) => {
       cellData: state.cellData,
       selectedCell: index + 1,
       across: state.across,
+      cols: state.cols
     };
     localStorage.setItem("crosswordData", JSON.stringify(crosswordData));
     return crosswordData; //end keydown
@@ -373,6 +380,7 @@ const Crossword = (props) => {
       <div className={classes.crosswordContent}>
         <Card className='dark'><CrosswordGrid
           cellData={state.cellData}
+          cols={state.cols}
           onKeyDown={onKeyDownHandler}
           onMouseDown={onMouseDownHandler}
         /></Card>

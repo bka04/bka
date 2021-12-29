@@ -3,8 +3,11 @@ import CrosswordCell from "./CrosswordCell";
 
 const CrosswordGrid = (props) => {
 
+  const style = {'grid-template-rows': `repeat(${props.cols}, 40px)`,
+  'grid-template-columns': `repeat(${props.cols}, 40px)`}
+
   return (
-  <div className="crossword">
+  <div className="crossword" style={style}>
     {props.cellData.map((cell) => (
     <CrosswordCell 
       disabled={cell.disabled ? 'disabled' : ''}

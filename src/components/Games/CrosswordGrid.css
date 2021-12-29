@@ -1,7 +1,5 @@
 .crossword {
   display: grid;
-  grid-template-rows: repeat(5, 40px);
-  grid-template-columns: repeat(5, 40px);
 }
 
 .cell input {
