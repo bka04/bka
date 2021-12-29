@@ -203,7 +203,27 @@ const getNextWord = (state, index) => {
       return newIndex; //return if valid. Otherwise, add 1 and try again.
     }
   }
+}
 
+const getPrevWord = (state, index) => {
+  const questionNumberProp = state.across
+  ? "questionNumberAcross"
+  : "questionNumberDown";
+  const currentQuestionNumber = state.cellData[index][questionNumberProp];
+
+  const minQuestionNumber = Math.min.apply(null, state.cellData.map(cell => cell[questionNumberProp] ? cell[questionNumberProp] : 999));
+  
+  if (currentQuestionNumber === minQuestionNumber) { //if already at the lowest down or across question number, get the highest
+    const maxQuestionNumber = Math.max.apply(null, state.cellData.map(cell => cell[questionNumberProp] ? cell[questionNumberProp] : 0));
+    return state.cellData.findIndex(x => x[questionNumberProp] === maxQuestionNumber);
+  }
+
+  for (let q = currentQuestionNumber - 1; q >= minQuestionNumber; q--) {
+    const newIndex = state.cellData.findIndex(x => x[questionNumberProp] === q);
+    if (newIndex > -1) {
+      return newIndex; //return if valid. Otherwise, subtract 1 and try again.
+    }
+  }
 }
 
 const reducer = (state, action) => {
@@ -332,7 +352,11 @@ const reducer = (state, action) => {
         index = getNextCell(state, index, "down");
         break;
       case 9: //tab
-        index = getNextWord(state, index);
+        if (action.event.shiftKey) {
+          index = getPrevWord(state, index)
+        } else {
+          index = getNextWord(state, index);
+        }
         break;
       default: //letter
         index = getNextCell(state, index);
