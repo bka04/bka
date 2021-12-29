@@ -414,7 +414,7 @@ const Crossword = (props) => {
 
   const getSelectedQuestionNumber = (state, direction) => {
     const index = state.cellData.findIndex((cell) => cell.id === state.selectedCell);
-    return (index > -1) ? state.cellData[index][`questionNumber${direction}`] : 0;
+    return (index > -1) ? state.cellData[index][`questionNumber${direction}`] : 1;
 
   };
 
