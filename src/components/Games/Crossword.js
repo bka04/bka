@@ -225,6 +225,27 @@ const reducer = (state, action) => {
     };
   } //end resetGrid
 
+  if (action.type === "selectCellFromClue") {
+
+    state.across = action.event.target.dataset.direction === 'Across' ? true : false;
+    const index = state.cellData.findIndex((cell) => 
+      cell[`questionNumber${action.event.target.dataset.direction}`] === parseInt(action.event.target.dataset.questionNumber)
+    );
+
+    state.cellData = clearCellDisplay(state.cellData);
+    state.cellData[index].focus = true;
+    state.cellData = updateHighlighting(state, index);
+    
+    const crosswordData = {
+      cellData: state.cellData,
+      selectedCell: index + 1,
+      across: state.across,
+      cols: state.cols,
+    };
+    localStorage.setItem("crosswordData", JSON.stringify(crosswordData));
+    return crosswordData;
+  } //end selectCellFromClue
+
   action.event.preventDefault();
   const cellNum = parseInt(action.event.target.dataset.cellnum);
   let index = cellNum - 1;
@@ -356,6 +377,10 @@ const Crossword = (props) => {
     dispatch({ type: "mousedown", event });
   };
 
+  const clueOnClickHandler = (event) => {
+    dispatch({ type: "selectCellFromClue", event });
+  };
+
   const resetGrid = (event) => {
     if (window.confirm("Are you sure you want to reset the puzzle?")) {
       dispatch({ type: "resetGrid", initialCrosswordData: props.initialCrosswordData });
@@ -369,13 +394,14 @@ const Crossword = (props) => {
     } else {
       return 0;
     }
-  }
+  };
 
   return (
     <Fragment>
       <div className='crosswordContent'>
         <Card className='dark crosswordCard'>
           <CrosswordClues 
+            onClick={clueOnClickHandler}
             clueDirection='Across' 
             clues={props.acrossClues}
             selectedDirection={state.across ? 'Across' : 'Down'}
@@ -392,6 +418,7 @@ const Crossword = (props) => {
         </Card>
         <Card className='dark crosswordCard'>
           <CrosswordClues 
+            onClick={clueOnClickHandler}
             clueDirection='Down' 
             clues={props.downClues}
             selectedDirection={state.across ? 'Across' : 'Down'}

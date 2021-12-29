@@ -10,12 +10,15 @@ const CrosswordClues = (props) => {
           return (
             <li
               key={clue.number}
+              data-direction={props.clueDirection}
+              data-question-number={clue.number}
               className={
                 props.clueDirection === props.selectedDirection &&
                 clue.number === props.selectedQuestion
                   ? "highlight"
                   : ""
               }
+              onClick={props.onClick}
             >
               {clue.number}. &nbsp;{clue.text}
             </li>
