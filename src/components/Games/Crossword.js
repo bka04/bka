@@ -205,29 +205,8 @@ const reducer = (state, action) => {
   }
 
   if (action.type === "resetGrid") {
-    const DUMMYDATA = [];
-    for (let i = 1; i < 26; i++) {
-      let focus = false;
-      if (i === 1) {
-        focus = true;
-      }
-
-      let disabled = false;
-      //TESTING
-      // if (i === 8 || i === 14) {
-      //   disabled = true;
-      // }
-
-      DUMMYDATA.push({
-        id: i,
-        disabled,
-        focus,
-        value: "",
-      });
-    }
-
     localStorage.removeItem("crosswordData");
-    state.cellData = populateNumbers(DUMMYDATA);
+    state.cellData = populateNumbers(action.initialCrosswordData);
     state.across = true;
     state.cellData = updateHighlighting(state, 0);
     return {
@@ -357,9 +336,9 @@ const Crossword = (props) => {
     if (storedCrosswordData !== null) {
       dispatch({ type: "loadStateFromStorage", storedCrosswordData });
     } else {
-      dispatch({ type: "resetGrid" });
+      dispatch({ type: "resetGrid", initialCrosswordData: props.initialCrosswordData });
     }
-  }, []);
+  }, [props.initialCrosswordData]);
 
   const onKeyDownHandler = (event) => {
     dispatch({ type: "keydown", event });
@@ -371,7 +350,7 @@ const Crossword = (props) => {
 
   const resetGrid = (event) => {
     if (window.confirm("Are you sure you want to reset the puzzle?")) {
-      dispatch({ type: "resetGrid" });
+      dispatch({ type: "resetGrid", initialCrosswordData: props.initialCrosswordData });
     }
   };
 
