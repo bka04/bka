@@ -1,8 +1,10 @@
 .clueList {
   list-style: none;
   margin: 5px;
+  color: #bdc1c6;
 }
 
 .clues > h4 {
   margin: 5px;
+  color: #bdc1c6;
 }

@@ -74,13 +74,13 @@ const Author = (props) => {
 
   return (
     <div className={classes.mainContainer}>
-      <Card>
+      <Card className='white'>
         <BookDetails
           book={findBook(selectedBookId)}
           key={findBook(selectedBookId).id}
         />
       </Card>
-      <Card>
+      <Card className='white'>
         <BookList
           books={BOOKS}
           selectedBookId={selectedBookId}

@@ -371,12 +371,12 @@ const Crossword = (props) => {
   return (
     <Fragment>
       <div className={classes.crosswordContent}>
-        <CrosswordGrid
+        <Card className='dark'><CrosswordGrid
           cellData={state.cellData}
           onKeyDown={onKeyDownHandler}
           onMouseDown={onMouseDownHandler}
-        />
-        <Card><CrosswordClues /></Card>
+        /></Card>
+        <Card className='dark'><CrosswordClues /></Card>
       </div>
       <Button className="resetBtn" onClick={resetGrid}>
         Reset
