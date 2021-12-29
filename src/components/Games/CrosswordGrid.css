@@ -16,14 +16,16 @@
   text-transform: capitalize;
 }
 .cell input:focus {
-  background-color: rgb(200, 200, 200);
+  /* background-color: rgb(200, 200, 200); */
+  background-color: #70bbbb;
 }
 .cell input:disabled {
   background-color: black;
 }
 
 .cellHighlight {
-  background-color: rgb(233, 233, 233);
+  /* background-color: rgb(233, 233, 233); */
+  background-color: #88dfdf;
 }
 
 .cell {

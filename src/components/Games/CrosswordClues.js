@@ -5,7 +5,7 @@ const CrosswordClues = () => {
     <div className='clues'>
       <h4>Across</h4>
       <ul className='clueList'>
-        <li>1. Popular JavaScript framework</li>
+        <li>1. Respond.  Also a popular JavaScript framework</li>
         <li>6. Debate</li>
         <li>7. These are worth two points in cribbage</li>
         <li>8. Florida Keys, e.g.</li>

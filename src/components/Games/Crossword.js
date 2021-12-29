@@ -229,7 +229,7 @@ const reducer = (state, action) => {
     state.across = true;
     state.cellData = updateHighlighting(state, 0);
     return {
-      cellData: populateNumbers(DUMMYDATA),
+      cellData: state.cellData,
       selectedCell: 0,
       across: true,
     };
