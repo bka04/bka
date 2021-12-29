@@ -6,11 +6,23 @@
 }
 
 .crosswordCluesCard {
-  flex: 0 1 400px;
+  flex: 0 1 500px;
 }
 
 .crosswordGridCard {
   flex: 0 1;
+}
+
+@media (max-width: 1450px) {
+  .crosswordCluesCard {
+    flex: 0 1 400px;
+  }
+}
+
+@media (max-width: 800px) {
+  .crosswordContent {
+    gap: 0px;
+  }
 }
 
 @media (max-width: 650px) {
@@ -25,8 +37,3 @@
   }
 }
 
-@media (max-width: 800px) {
-  .crosswordContent {
-    gap: 0px;
-  }
-}
