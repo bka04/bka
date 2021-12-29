@@ -89,13 +89,20 @@ const updateHighlighting = (state, index) => {
 };
 
 //reset highlight and focus for all cells
-const clearCellDisplay = (state) => {
-  return state.cellData.map((cell) => ({
+const clearCellDisplay = (cellData) => {
+  return cellData.map((cell) => ({
     ...cell,
     highlight: false,
     focus: false,
   }));
 };
+
+const clearCellValues = (cellData) => {
+  return cellData.map((cell) => ({
+    ...cell,
+    value: ''
+  }));
+}
 
 const getNextCell = (state, index, directionOverride = "") => {
   const TOTALCELLS = Math.pow(state.cols, 2);
@@ -206,7 +213,8 @@ const reducer = (state, action) => {
 
   if (action.type === "resetGrid") {
     localStorage.removeItem("crosswordData");
-    state.cellData = populateNumbers(action.initialCrosswordData);
+    state.cellData = clearCellValues(action.initialCrosswordData);
+    state.cellData = populateNumbers(state.cellData);
     state.across = true;
     state.cellData = updateHighlighting(state, 0);
     return {
@@ -230,7 +238,7 @@ const reducer = (state, action) => {
       state.across = !state.across;
     }
 
-    state.cellData = clearCellDisplay(state);
+    state.cellData = clearCellDisplay(state.cellData);
     state.cellData[index].focus = true;
     state.cellData = updateHighlighting(state, index);
 
@@ -247,7 +255,7 @@ const reducer = (state, action) => {
       //backspace/delete
       if (state.cellData[index].value === "") {
         index = getPrevCell(state, index);
-        state.cellData = clearCellDisplay(state);
+        state.cellData = clearCellDisplay(state.cellData);
         state.cellData[index].focus = true;
         state.cellData = updateHighlighting(state, index);
       }
@@ -287,7 +295,7 @@ const reducer = (state, action) => {
       state.cellData[index].value = action.event.key;
     }
 
-    state.cellData = clearCellDisplay(state);
+    state.cellData = clearCellDisplay(state.cellData);
 
     switch (action.event.keyCode) {
       case 37: //left arrow
