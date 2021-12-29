@@ -1,0 +1,10 @@
+.crosswordContent {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.crosswordCard {
+  flex: 0 1 400px;
+}

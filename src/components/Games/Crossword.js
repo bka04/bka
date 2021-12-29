@@ -3,7 +3,7 @@ import Button from "../UI/Button";
 import Card from "../UI/Card";
 import CrosswordClues from "./CrosswordClues";
 import CrosswordGrid from "./CrosswordGrid";
-import classes from './Crossword.module.css';
+import './Crossword.css';
 
 
 //Populate the across and down question numbers for each cell
@@ -364,14 +364,21 @@ const Crossword = (props) => {
 
   return (
     <Fragment>
-      <div className={classes.crosswordContent}>
-        <Card className='dark'><CrosswordGrid
-          cellData={state.cellData}
-          cols={state.cols}
-          onKeyDown={onKeyDownHandler}
-          onMouseDown={onMouseDownHandler}
-        /></Card>
-        <Card className='dark'><CrosswordClues /></Card>
+      <div className='crosswordContent'>
+        <Card className='dark crosswordCard'>
+          <CrosswordClues direction='Across' clues={props.acrossClues} />
+        </Card>
+        <Card className='dark'>
+          <CrosswordGrid
+            cellData={state.cellData}
+            cols={state.cols}
+            onKeyDown={onKeyDownHandler}
+            onMouseDown={onMouseDownHandler}
+          />
+        </Card>
+        <Card className='dark crosswordCard'>
+          <CrosswordClues direction='Down' clues={props.downClues} />
+        </Card>
       </div>
       <Button className="resetBtn" onClick={resetGrid}>
         Reset
