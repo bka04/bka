@@ -7,7 +7,7 @@ const CrosswordGrid = (props) => {
   'gridTemplateColumns': `repeat(${props.cols}, 40px)`}
 
   return (
-  <div className="crossword" style={style}>
+  <div className="crosswordGrid" style={style}>
     {props.cellData.map((cell) => (
     <CrosswordCell 
       disabled={cell.disabled ? 'disabled' : ''}

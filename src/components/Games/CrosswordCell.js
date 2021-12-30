@@ -1,4 +1,5 @@
 import {useRef, useEffect} from 'react';
+import './CrosswordCell.css';
 
 const CrosswordCell = (props) => {
   const cellInput = useRef(null);
