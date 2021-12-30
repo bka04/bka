@@ -12,6 +12,7 @@
   caret-color: transparent;
   padding: 0;
   text-transform: capitalize;
+  cursor: pointer;
 }
 .cell input:focus {
   /* background-color: rgb(200, 200, 200); */
