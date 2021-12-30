@@ -14,7 +14,7 @@ const BookDetails = (props) => {
 
   return (
     <Fragment>
-      <div id="test" className={classes.container}>
+      <div className={classes.container}>
         <img
           src={coverSrc}
           alt={book.title}
