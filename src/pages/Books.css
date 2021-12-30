@@ -1,0 +1,15 @@
+.bookCover {
+  box-shadow: 0 2px 5px 1px rgb(0 0 0 / 20%);
+  border-radius: 3px;
+}
+
+.mainBooksContainer {
+  width: 1366px;
+  margin: auto;
+}
+
+@media (max-width: 1366px) {
+  .mainBooksContainer {
+    width: 100%;
+  }
+}

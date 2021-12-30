@@ -1,8 +1,8 @@
 import { useState } from "react";
-import Card from "../UI/Card";
-import BookList from "./BookList";
-import BookDetails from "./BookDetails";
-import classes from "./Books.module.css";
+import Card from "../components/UI/Card";
+import BookList from "../components/books/BookList";
+import BookDetails from "../components/books/BookDetails";
+import './Books.css';
 
 const BOOKS = [
   {
@@ -73,7 +73,7 @@ const Author = (props) => {
   }
 
   return (
-    <div className={classes.mainContainer}>
+    <div className='mainBooksContainer'>
       <Card className='white'>
         <BookDetails
           book={findBook(selectedBookId)}

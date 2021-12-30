@@ -1,5 +1,5 @@
 import classes from "./BookListItem.module.css";
-import "./Books.css";
+import "../../pages/Books.css";
 
 const BookListItem = (props) => {
   const coverSrc = props.coverFile

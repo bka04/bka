@@ -1,8 +1,8 @@
 import { Route, Redirect, Switch } from "react-router-dom";
 
-import Header from "./components/Layout/Header";
-import Books from "./components/Books/Books";
-import Games from "./components/Games/Games";
+import Header from "./components/layout/Header";
+import Books from "./pages/Books";
+import Games from "./pages/Games";
 
 function App() {
   return (

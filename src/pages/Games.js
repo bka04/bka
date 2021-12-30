@@ -1,4 +1,4 @@
-import Crossword from "./Crossword";
+import Crossword from "../components/games/Crossword";
 
 const DUMMYDATA = [];
 for (let i = 1; i < 26; i++) {
