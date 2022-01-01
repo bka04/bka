@@ -63,7 +63,7 @@ body {
       width: 100%;
       transform: translateX(0%);
   }
-  30% {
+  35% {
     opacity: 0;
   }
   100% {
