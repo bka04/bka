@@ -21,7 +21,6 @@ body {
   animation: slideFromRight 1s forwards;
 }
 .page-exit {
-  /* transition-delay: 3s; */
   animation: SlideToLeft 1s forwards;
 }
 
@@ -47,6 +46,9 @@ body {
       opacity: 0;
       width: 0%;
       transform: translateX(100%);
+  }
+  30% {
+    opacity: 1;
   }
   100% {
       opacity: 1;
