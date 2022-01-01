@@ -1,4 +1,5 @@
 import { Route, Redirect } from "react-router-dom";
+import { CSSTransition } from "react-transition-group";
 
 import Header from "./components/layout/Header";
 import Books from "./pages/Books";
@@ -19,12 +20,25 @@ function App() {
   return (
     <div>
       <Header />
-
+      <div className='mainPageContainer'>
       {routes.map(({path, Component}) => (
         <Route key={path} path={path} exact>
-          {path === '/' ? <Redirect to='/books' /> : <Component />}
+          {({match}) => (
+            <CSSTransition
+              in={match != null}
+              timeout={3000}
+              classNames="page"
+              unmountOnExit
+              mountOnEnter
+            >
+              <div className="page">
+                {path === '/' ? <Redirect to='/books' /> : <Component />}
+              </div>
+            </CSSTransition>
+          )}
         </Route>
       ))}
+      </div>
     </div>
   );
 }
