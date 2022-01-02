@@ -1,0 +1,10 @@
+.mainAcrobaticsContainer {
+  width: 1366px;
+  margin: auto;
+}
+
+@media (max-width: 1366px) {
+  .mainAcrobaticsContainer {
+    width: 100%;
+  }
+}

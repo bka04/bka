@@ -13,7 +13,7 @@ const initialState = {
 const reducer = (state, action) => {
   if (action.type === "showHideNavLinks") {
 
-    if (window.innerWidth <= WINDOWBREAKPOINT) {
+    if (window.innerWidth < WINDOWBREAKPOINT) {
       //if already collapsed, leave nav links as is. If collapsing now, hide nav links.
       state.showNavLinks = state.collapsed ? state.showNavLinks : false;
       state.collapsed = true;

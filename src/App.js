@@ -4,8 +4,8 @@ import { CSSTransition } from "react-transition-group";
 import Header from "./components/layout/Header";
 import Books from "./pages/Books";
 import Games from "./pages/Games";
+import Acrobatics from "./pages/Acrobatics";
 
-const Acrobatics = () => <p>Acrobatics stuff coming soon. Possibly slideshow with pause/forward/back buttons.</p>;
 const Dev = () => <p>Development stuff coming soon</p>;
 
 const routes = [
