@@ -1,9 +1,13 @@
-.nav ul {
+.showNavLinks {
   list-style: none;
   overflow: hidden;
   display: flex;
   justify-content: center;
   gap: 30px;
+}
+
+.hideNavLinks {
+  display: none;
 }
 
 .nav li {
@@ -24,9 +28,18 @@
   text-decoration-thickness: 1px;
 }
 
+.menuIcon {
+  display: none;
+  cursor: pointer;
+  color: #88dfdf;
+}
+
 @media (max-width: 500px) {
-  .nav ul {
+  .showNavLinks {
     flex-direction: column;
     gap: 5px;
+  }
+  .menuIcon {
+    display: block;
   }
 }
