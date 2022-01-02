@@ -26,7 +26,7 @@ function App() {
           {({match}) => (
             <CSSTransition
               in={match != null}
-              timeout={3000}
+              timeout={1000}
               classNames="page"
               unmountOnExit
               mountOnEnter
