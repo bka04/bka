@@ -1,33 +1,58 @@
 import { NavLink } from "react-router-dom";
-import { useState, useEffect, useCallback } from "react";
+import { useEffect, useReducer, useCallback } from "react";
 
 import classes from "./Header.module.css";
 
-const Header = (props) => {
-  const [showNavLinks, setShowNavLinks] = useState(true);
+const WINDOWBREAKPOINT = 525;
 
-  const onClickHandler = () => {
-    setShowNavLinks((prevState) => {
-      return !prevState;
-    })
-  };
+const initialState = {
+  showNavLinks: true,
+  collapsed: false
+};
 
-  const showHideNavLinks = useCallback(() => {
-    if (window.innerWidth <= 500) {
-      // setShowNavLinks((prevState) => {
-      //   return !prevState;
-      // });
+const reducer = (state, action) => {
+  if (action.type === "showHideNavLinks") {
+
+    if (window.innerWidth <= WINDOWBREAKPOINT) {
+      //if already collapsed, leave nav links as is. If collapsing now, hide nav links.
+      state.showNavLinks = state.collapsed ? state.showNavLinks : false;
+      state.collapsed = true;
     } else {
-      setShowNavLinks(true);
+      state.showNavLinks = true;
+      state.collapsed = false;
     } 
-  }, []);
+
+    return {
+      showNavLinks: state.showNavLinks,
+      collapsed: state.collapsed
+    };
+  } else if (action.type ==="clickMenuIcon") {
+    return {
+      showNavLinks: !state.showNavLinks,
+      collapsed: state.collapsed
+    };
+  };
+};
+
+
+const Header = (props) => {
+  const [state, dispatch] = useReducer(reducer, initialState);
+  
+  const onClickHandler = () => {
+    dispatch({ type: "clickMenuIcon" });
+  };
+  
+  const showHideNavLinks = (useCallback(() => {
+      dispatch({ type: "showHideNavLinks"});
+    }, [])
+  );
 
   useEffect(() => {
     showHideNavLinks();
-  }, [showHideNavLinks])
+  }, [showHideNavLinks]);
 
 
-  const ulClass = showNavLinks ? classes.showNavLinks : classes.hideNavLinks;
+  const ulClass = state.showNavLinks ? classes.showNavLinks : classes.hideNavLinks;
 
   window.addEventListener('resize', showHideNavLinks);
 

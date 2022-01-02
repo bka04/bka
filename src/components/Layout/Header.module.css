@@ -32,12 +32,14 @@
   display: none;
   cursor: pointer;
   color: #88dfdf;
+  margin: 10px 10px;
 }
 
-@media (max-width: 500px) {
+@media (max-width: 525px) {
   .showNavLinks {
     flex-direction: column;
     gap: 5px;
+    margin-top: 8px;
   }
   .menuIcon {
     display: block;
