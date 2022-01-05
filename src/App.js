@@ -1,7 +1,7 @@
 import { Route, Redirect, useLocation } from "react-router-dom";
 
 import Header from "./components/layout/Header";
-import Welcome from "./pages/Welcome";
+import Home from "./pages/Home";
 import Books from "./pages/Books";
 import Games from "./pages/Games";
 import Acrobatics from "./pages/Acrobatics";
@@ -10,7 +10,7 @@ const Dev = () => <p>Development stuff coming soon</p>;
 
 const routes = [
   { path: "/"},
-  { path: "/welcome", Component: Welcome },
+  { path: "/home", Component: Home },
   { path: "/books", Component: Books },
   { path: "/games", Component: Games },
   { path: "/acrobatics", Component: Acrobatics },
@@ -22,11 +22,11 @@ function App() {
 
   return (
     <div>
-      {location.pathname !== "/welcome" ? <Header /> : null}
+      {location.pathname !== "/home" ? <Header /> : null}
       <div className="mainPageContainer">
         {routes.map(({ path, Component }) => (
           <Route key={path} path={path} exact>
-              {path === '/' ? <Redirect to='/welcome' /> : <Component />}
+              {path === '/' ? <Redirect to='/home' /> : <Component />}
           </Route>
         ))}
       </div>

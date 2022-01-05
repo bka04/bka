@@ -1,0 +1,56 @@
+.homeImagesContainer {
+  display: grid;
+  grid-template-columns: repeat(1fr, 4);
+  grid-template-rows: repeat(1fr, 4);
+  grid-template-areas: 
+  "imgMain imgMain img1 img2"
+  "imgMain imgMain img3 img4";
+}
+
+@media (max-width: 700px) {
+  .homeImagesContainer {
+    grid-template-columns: repeat(1fr, 2);
+    grid-template-rows: repeat(1fr, 4);
+    grid-template-areas: 
+  "imgMain imgMain"
+  "imgMain imgMain"
+  "img1 img2"
+  "img3 img4";
+  }
+}
+
+.homeImageSub, .homeImageMain {
+  width: 100%;
+  max-height: 100%;
+  display: block;
+}
+
+.homeImageSub {
+  opacity: 30%;
+  cursor: pointer;
+}
+
+.homeImageSub:hover {
+  opacity: 1;
+}
+
+
+.homeImageMain {
+  grid-area: imgMain;
+}
+
+.homeImage1 {
+  grid-area: img1;
+}
+
+.homeImage2 {
+  grid-area: img2;
+}
+
+.homeImage3 {
+  grid-area: img3;
+}
+
+.homeImage4 {
+  grid-area: img4;
+}

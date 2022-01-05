@@ -63,6 +63,11 @@ const Header = (props) => {
           <span className={`material-icons ${classes.menuIcon}`} onClick={onClickHandler}>menu</span>
         </div>
         <ul className={ulClass}>
+        <li>
+            <NavLink to="/home" activeClassName={classes.active}>
+              Home
+            </NavLink>
+          </li>
           <li>
             <NavLink to="/books" activeClassName={classes.active}>
               Books
