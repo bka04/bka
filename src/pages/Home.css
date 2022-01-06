@@ -7,7 +7,7 @@
   "imgMain imgMain img3 img4";
 }
 
-@media (max-width: 700px) {
+@media (max-width: 900px) {
   .homeImagesContainer {
     grid-template-columns: repeat(1fr, 2);
     grid-template-rows: repeat(1fr, 4);
@@ -19,38 +19,74 @@
   }
 }
 
+.homeImageSubContainer {
+  position: relative;
+}
+/* .homeImageSubContainer::before {
+  content: "";
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  background-color: rgba(0,0,0, 0.75);
+}
+.homeImageSubContainer::before:hover {
+  background-color: rgba(0,0,0, 0);
+} */
+
+.homeImageSubText {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+
+  transform: translate(-50%, -100%);
+  font-size: 2vw;
+}
+
+@media (max-width: 900px) {
+  .homeImageSubText {
+    font-size: 4vw;
+  }
+}
+
+.homeImageSubContainer {
+  opacity: 30%;
+  cursor: pointer;
+}
+
+.homeImageSubContainer:hover {
+  opacity: 1;
+}
+
+@media (max-width: 450px) {
+  .homeImageSubContainer {
+    opacity: 1;
+  }
+}
+
 .homeImageSub, .homeImageMain {
   width: 100%;
   max-height: 100%;
   display: block;
 }
 
-.homeImageSub {
-  opacity: 30%;
-  cursor: pointer;
-}
-
-.homeImageSub:hover {
-  opacity: 1;
-}
-
-
-.homeImageMain {
+.homeImageMainContainer {
   grid-area: imgMain;
 }
 
-.homeImage1 {
+.homeImageSubContainer1 {
   grid-area: img1;
 }
 
-.homeImage2 {
+.homeImageSubContainer2 {
   grid-area: img2;
 }
 
-.homeImage3 {
+.homeImageSubContainer3 {
   grid-area: img3;
 }
 
-.homeImage4 {
+.homeImageSubContainer4 {
   grid-area: img4;
 }
