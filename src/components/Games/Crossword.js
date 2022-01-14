@@ -232,36 +232,38 @@ const reducer = (state, action) => {
     return action.storedCrosswordData;
   }
 
+  let newState = {...state, cellData: state.cellData.slice()}; //to avoid directly mutating state
+
   if (action.type === "resetGrid") {
     localStorage.removeItem("crosswordData");
-    state.cellData = clearCellValues(action.initialCrosswordData);
-    state.cellData = populateNumbers(state.cellData);
-    state.across = true;
-    state.cellData = updateHighlighting(state, 0);
+    newState.cellData = clearCellValues(action.initialCrosswordData);
+    newState.cellData = populateNumbers(newState.cellData);
+    newState.across = true;
+    newState.cellData = updateHighlighting(newState, 0);
     return {
-      cellData: state.cellData,
+      cellData: newState.cellData,
       selectedCell: 0,
       across: true,
-      cols: Math.sqrt(state.cellData.length),
+      cols: Math.sqrt(newState.cellData.length),
     };
   } //end resetGrid
 
   if (action.type === "selectCellFromClue") {
 
-    state.across = action.event.target.dataset.direction === 'Across' ? true : false;
-    const index = state.cellData.findIndex((cell) => 
+    newState.across = action.event.target.dataset.direction === 'Across' ? true : false;
+    const index = newState.cellData.findIndex((cell) => 
       cell[`questionNumber${action.event.target.dataset.direction}`] === parseInt(action.event.target.dataset.questionNumber)
     );
 
-    state.cellData = clearCellDisplay(state.cellData);
-    state.cellData[index].focus = true;
-    state.cellData = updateHighlighting(state, index);
+    newState.cellData = clearCellDisplay(newState.cellData);
+    newState.cellData[index].focus = true;
+    newState.cellData = updateHighlighting(newState, index);
     
     const crosswordData = {
-      cellData: state.cellData,
+      cellData: newState.cellData,
       selectedCell: index + 1,
-      across: state.across,
-      cols: state.cols,
+      across: newState.across,
+      cols: newState.cols,
     };
     localStorage.setItem("crosswordData", JSON.stringify(crosswordData));
     return crosswordData;
@@ -276,38 +278,38 @@ const reducer = (state, action) => {
     (action.type === "keydown" &&
       (action.event.keyCode === 13 || action.event.keyCode === 32)) //space/enter
   ) {
-    if (cellNum === state.selectedCell) {
-      state.across = !state.across;
+    if (cellNum === newState.selectedCell) {
+      newState.across = !newState.across;
     }
 
-    state.cellData = clearCellDisplay(state.cellData);
-    state.cellData[index].focus = true;
-    state.cellData = updateHighlighting(state, index);
+    newState.cellData = clearCellDisplay(newState.cellData);
+    newState.cellData[index].focus = true;
+    newState.cellData = updateHighlighting(newState, index);
 
     const crosswordData = {
-      cellData: state.cellData,
+      cellData: newState.cellData,
       selectedCell: cellNum,
-      across: state.across,
-      cols: state.cols,
+      across: newState.across,
+      cols: newState.cols,
     };
     localStorage.setItem("crosswordData", JSON.stringify(crosswordData));
     return crosswordData; //end click (mousedown) or space/enter keydown
   } else if (action.type === "keydown") {
     if (action.event.keyCode === 8 || action.event.keyCode === 46) {
       //backspace/delete
-      if (state.cellData[index].value === "") {
-        index = getPrevCell(state, index);
-        state.cellData = clearCellDisplay(state.cellData);
-        state.cellData[index].focus = true;
-        state.cellData = updateHighlighting(state, index);
+      if (newState.cellData[index].value === "") {
+        index = getPrevCell(newState, index);
+        newState.cellData = clearCellDisplay(newState.cellData);
+        newState.cellData[index].focus = true;
+        newState.cellData = updateHighlighting(newState, index);
       }
-      state.cellData[index].value = "";
+      newState.cellData[index].value = "";
 
       const crosswordData = {
-        cellData: state.cellData,
+        cellData: newState.cellData,
         selectedCell: index + 1,
-        across: state.across,
-        cols: state.cols
+        across: newState.across,
+        cols: newState.cols
       };
       localStorage.setItem("crosswordData", JSON.stringify(crosswordData));
       return crosswordData;
@@ -320,10 +322,10 @@ const reducer = (state, action) => {
     ) {
       //not a valid input; return without any changes
       const crosswordData = {
-        cellData: state.cellData,
-        selectedCell: state.selectedCell,
-        across: state.across,
-        cols: state.cols
+        cellData: newState.cellData,
+        selectedCell: newState.selectedCell,
+        across: newState.across,
+        cols: newState.cols
       };
       localStorage.setItem("crosswordData", JSON.stringify(crosswordData));
       return crosswordData;
@@ -334,43 +336,43 @@ const reducer = (state, action) => {
       (action.event.keyCode < 37 || action.event.keyCode > 40) //not left/up/right/down
     ) {
       //a letter was entered; set to keypress
-      state.cellData[index].value = action.event.key;
+      newState.cellData[index].value = action.event.key;
     }
 
-    state.cellData = clearCellDisplay(state.cellData);
+    newState.cellData = clearCellDisplay(newState.cellData);
 
     switch (action.event.keyCode) {
       case 37: //left arrow
-        index = getPrevCell(state, index, "across");
+        index = getPrevCell(newState, index, "across");
         break;
       case 38: //up arrow
-        index = getPrevCell(state, index, "down");
+        index = getPrevCell(newState, index, "down");
         break;
       case 39: //right arrow
-        index = getNextCell(state, index, "across");
+        index = getNextCell(newState, index, "across");
         break;
       case 40: //down arrow
-        index = getNextCell(state, index, "down");
+        index = getNextCell(newState, index, "down");
         break;
       case 9: //tab
         if (action.event.shiftKey) {
-          index = getPrevWord(state, index)
+          index = getPrevWord(newState, index)
         } else {
-          index = getNextWord(state, index);
+          index = getNextWord(newState, index);
         }
         break;
       default: //letter
-        index = getNextCell(state, index);
+        index = getNextCell(newState, index);
     }
 
-    state.cellData[index].focus = true;
-    state.cellData = updateHighlighting(state, index);
+    newState.cellData[index].focus = true;
+    newState.cellData = updateHighlighting(newState, index);
 
     const crosswordData = {
-      cellData: state.cellData,
+      cellData: newState.cellData,
       selectedCell: index + 1,
-      across: state.across,
-      cols: state.cols
+      across: newState.across,
+      cols: newState.cols
     };
     localStorage.setItem("crosswordData", JSON.stringify(crosswordData));
     return crosswordData; //end keydown
