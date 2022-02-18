@@ -432,6 +432,16 @@ const Crossword = (props) => {
 
   return (
     <Fragment>
+      <Card className='dark crosswordStatus'>
+        <div>Puzzle: 1/10</div>
+        <div>Difficulty: Easy</div>
+        <div>Login</div>
+      </Card>
+      <Card className='dark crosswordPowerUps'>
+        <div>Power-Ups: </div>
+        <div>Crossword Cash: 100</div>
+        <div>Store</div>
+      </Card>
       <div className='crosswordContent'>
         <Card className='dark crosswordCluesCard'>
           <CrosswordClues 
