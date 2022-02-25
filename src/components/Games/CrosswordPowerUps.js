@@ -1,36 +1,26 @@
+import "./CrosswordPowerUps.css";
+
+const icons = [
+  {id: "die", alt: "Reveal Random Letter"},
+  {id: "k", alt: "Reveal Letter"},
+  {id: "checkmark", alt: "Verify Word"},
+  {id: "buyLetter", alt: "Reveal Letter Everywhere"},
+  {id: "check", alt: "Verify Grid"},
+  {id: "word", alt: "Reveal Word"}
+];
+
 const crosswordPowerUps = (props) => {
   return (
-    <div>
-      <img
-        src={require("../../assets/icon-k.png").default}
-        alt="Letter Solver"
-        width="50"
-        height="50"
-      ></img>
-      <img
-        src={require("../../assets/icon-die.png").default}
-        alt="Random Word Solver"
-        width="50"
-        height="50"
-      ></img>
-      <img
-        src={require("../../assets/icon-word.png").default}
-        alt="Word Solver"
-        width="50"
-        height="50"
-      ></img>
-      <img
-        src={require("../../assets/icon-check.png").default}
-        alt="Grid Checker"
-        width="50"
-        height="50"
-      ></img>
-      <img
-        src={require("../../assets/icon-buyLetter.png").default}
-        alt="Buy A Letter"
-        width="50"
-        height="50"
-      ></img>
+    <div className="crosswordPowerUps">
+      {icons.map((icon) => (
+        <img 
+          src={require("../../assets/icon-" + icon.id + ".png").default}
+          alt={icon.alt}
+          width="50"
+          height="50"
+          key={icon.id}
+        />
+      ))}
     </div>
   )
 }

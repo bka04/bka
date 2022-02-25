@@ -3,6 +3,7 @@ import Button from "../UI/Button";
 import Card from "../UI/Card";
 import CrosswordClues from "./CrosswordClues";
 import CrosswordGrid from "./CrosswordGrid";
+import CrosswordStatus from "./CrosswordStatus";
 import CrosswordPowerUps from "./CrosswordPowerUps";
 import './Crossword.css';
 import CrosswordActiveClue from "./CrosswordActiveClue";
@@ -433,13 +434,10 @@ const Crossword = (props) => {
 
   return (
     <Fragment>
-      <Card className='dark crosswordStatus'>
-        <div>Puzzle: 1/10</div>
-        <div>Difficulty: Easy</div>
-        <div>Crossword Cash: $100</div>
-        <div>Login</div>
+      <Card className='dark'>
+        <CrosswordStatus />
       </Card>
-      <Card className='dark crosswordPowerUps'>
+      <Card className='dark'>
         <CrosswordPowerUps />
       </Card>
       <div className='crosswordContent'>
