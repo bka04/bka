@@ -3,6 +3,7 @@ import Button from "../UI/Button";
 import Card from "../UI/Card";
 import CrosswordClues from "./CrosswordClues";
 import CrosswordGrid from "./CrosswordGrid";
+import CrosswordPowerUps from "./CrosswordPowerUps";
 import './Crossword.css';
 import CrosswordActiveClue from "./CrosswordActiveClue";
 
@@ -435,12 +436,11 @@ const Crossword = (props) => {
       <Card className='dark crosswordStatus'>
         <div>Puzzle: 1/10</div>
         <div>Difficulty: Easy</div>
+        <div>Crossword Cash: $100</div>
         <div>Login</div>
       </Card>
       <Card className='dark crosswordPowerUps'>
-        <div>Power-Ups: </div>
-        <div>Crossword Cash: 100</div>
-        <div>Store</div>
+        <CrosswordPowerUps />
       </Card>
       <div className='crosswordContent'>
         <Card className='dark crosswordCluesCard'>
@@ -478,6 +478,9 @@ const Crossword = (props) => {
       <Button className="resetBtn" onClick={resetGrid}>
         Reset
       </Button>
+      <div>
+        <p>Game icons made by Freepik from www.flaticon.com</p>
+      </div>
     </Fragment>
   );
 };
