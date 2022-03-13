@@ -21,6 +21,14 @@ for (let i = 1; i < 26; i++) {
   });
 }
 
+const ANSWERS = [
+  'R', 'E', 'A', 'C', 'T', 
+  'A', 'R', 'G', 'U', 'E', 
+  'P', 'A', 'I', 'R', 'S', 
+  'I', 'S', 'L', 'E', 'T',
+  'D', 'E', 'E', 'D', 'S'
+];
+
 const ACROSSCLUES = [
   { number: 1, text: "Respond.  Also a popular JavaScript framework" },
   { number: 6, text: "Debate" },
@@ -43,6 +51,7 @@ const Games = (props) => {
       initialCrosswordData={DUMMYDATA}
       acrossClues={ACROSSCLUES}
       downClues={DOWNCLUES}
+      answers={ANSWERS}
     />
   );
 };
