@@ -7,10 +7,12 @@ for (let i = 1; i < 26; i++) {
     focus = true;
   }
 
+  let locked = false;
   let disabled = false;
   //TESTING
   // if (i === 8 || i === 14) {
   //   disabled = true;
+  //   locked = true;
   // }
 
   DUMMYDATA.push({
@@ -18,6 +20,7 @@ for (let i = 1; i < 26; i++) {
     disabled,
     focus,
     value: "",
+    locked
   });
 }
 

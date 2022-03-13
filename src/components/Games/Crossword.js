@@ -337,8 +337,10 @@ const reducer = (state, action) => {
       action.event.keyCode !== 9 && //not tab
       (action.event.keyCode < 37 || action.event.keyCode > 40) //not left/up/right/down
     ) {
-      //a letter was entered; set to keypress
-      newState.cellData[index].value = action.event.key;
+      //a letter was entered; set to keypress if the letter is not locked
+      if (!newState.cellData[index].locked) {
+        newState.cellData[index].value = action.event.key;
+      }
     }
 
     newState.cellData = clearCellDisplay(newState.cellData);
