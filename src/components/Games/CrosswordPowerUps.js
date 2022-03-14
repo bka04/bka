@@ -13,13 +13,12 @@ const crosswordPowerUps = (props) => {
   return (
     <div className="crosswordPowerUps">
       {icons.map((icon) => (
-        <div className="crosswordPowerUp">
+        <div className="crosswordPowerUp" key={icon.id}>
         <img 
           src={require("../../assets/icon-" + icon.id + ".png").default}
           alt={icon.text}
           width="50"
           height="50"
-          key={icon.id}
         />
         <span className='tooltiptext'>{icon.text}</span>
         </div>

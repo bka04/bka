@@ -25,11 +25,11 @@ for (let i = 1; i < 26; i++) {
 }
 
 const ANSWERS = [
-  'R', 'E', 'A', 'C', 'T', 
-  'A', 'R', 'G', 'U', 'E', 
-  'P', 'A', 'I', 'R', 'S', 
-  'I', 'S', 'L', 'E', 'T',
-  'D', 'E', 'E', 'D', 'S'
+  'r', 'e', 'a', 'c', 't', 
+  'a', 'r', 'g', 'u', 'e', 
+  'p', 'a', 'i', 'r', 's', 
+  'i', 's', 'l', 'e', 't',
+  'd', 'e', 'e', 'd', 's'
 ];
 
 const ACROSSCLUES = [

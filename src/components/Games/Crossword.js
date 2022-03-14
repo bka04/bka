@@ -229,6 +229,11 @@ const getPrevWord = (state, index) => {
   }
 }
 
+const checkGridAgainstAnswers = (state, answers) => {
+  const gridLetters = state.cellData.map(cell => cell.value); //get letters from screen
+  return gridLetters.every((val, index) => val === answers[index]); //every letter correct?
+}
+
 const reducer = (state, action) => {
   if (action.type === "loadStateFromStorage") {
     return action.storedCrosswordData;
@@ -344,6 +349,7 @@ const reducer = (state, action) => {
     }
 
     newState.cellData = clearCellDisplay(newState.cellData);
+    let checkSolution = false;
 
     switch (action.event.keyCode) {
       case 37: //left arrow
@@ -367,10 +373,21 @@ const reducer = (state, action) => {
         break;
       default: //letter
         index = getNextCell(newState, index);
+        checkSolution = true;
+    }
+
+    let solved = false;
+    if (checkSolution) { //if a letter was pressed, see if the grid has been solved
+      solved = checkGridAgainstAnswers(newState, action.answers)
+    }
+
+    if (solved) {
+      //LOCK ALL LETTERS HERE!
+      //remember to update styling for locked letters
     }
 
     newState.cellData[index].focus = true;
-    newState.cellData = updateHighlighting(newState, index);
+    newState.cellData = updateHighlighting(newState, index); 
 
     const crosswordData = {
       cellData: newState.cellData,
@@ -379,6 +396,11 @@ const reducer = (state, action) => {
       cols: newState.cols
     };
     localStorage.setItem("crosswordData", JSON.stringify(crosswordData));
+
+    if (solved) {
+      alert("Well solved, crossworder!");
+    }
+
     return crosswordData; //end keydown
   } else {
     throw new Error();
@@ -401,7 +423,7 @@ const Crossword = (props) => {
   }, [props.initialCrosswordData]);
 
   const onKeyDownHandler = (event) => {
-    dispatch({ type: "keydown", event });
+    dispatch({ type: "keydown", event, answers: props.answers });
   };
 
   const onMouseDownHandler = (event) => {
