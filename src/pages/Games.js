@@ -1,6 +1,6 @@
 import Crossword from "../components/games/Crossword";
 
-const DUMMYDATA = [];
+const CELLDATA = [];
 for (let i = 1; i < 26; i++) {
   let focus = false;
   if (i === 1) {
@@ -16,7 +16,7 @@ for (let i = 1; i < 26; i++) {
   //   locked = true;
   // }
 
-  DUMMYDATA.push({
+  CELLDATA.push({
     id: i,
     disabled,
     focus,
@@ -46,14 +46,14 @@ const DOWNCLUES = [
   { number: 1, text: "With 5 down, same day COVID exams" },
   { number: 2, text: "Remove" },
   { number: 3, text: "Popular software development approach" },
-  { number: 4, text: "Honey ___ ham" },
+  { number: 4, text: "Healed" },
   { number: 5, text: "See 1 down" },
 ];
 
 const Games = (props) => {
   return (
     <Crossword
-      initialCrosswordData={DUMMYDATA}
+      initialCrosswordData={CELLDATA}
       acrossClues={ACROSSCLUES}
       downClues={DOWNCLUES}
       answers={ANSWERS}
