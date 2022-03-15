@@ -15,7 +15,9 @@ const CrosswordCell = (props) => {
       <input
       //{`${cell.className} ${cell.highlight ? 'cellHighlight' : ''}`}
         className={`cellInput ${props.className ? props.className : ''}` 
-          + `${props.highlight ? ' cellHighlight' : ''}`}
+          + `${props.highlight ? ' cellHighlight' : ''}`
+          + `${props.locked ? ' cellLocked' : ''}`
+        }
         type="text"
         size="1"
         maxLength="1"

@@ -23,6 +23,10 @@
   background-color: #88dfdf;
 }
 
+.cellLocked {
+  color: darkblue;
+}
+
 .cell {
   position: relative;
 }

@@ -349,7 +349,7 @@ const reducer = (state, action) => {
     }
 
     newState.cellData = clearCellDisplay(newState.cellData);
-    let checkSolution = false;
+    let solved = false;
 
     switch (action.event.keyCode) {
       case 37: //left arrow
@@ -373,21 +373,19 @@ const reducer = (state, action) => {
         break;
       default: //letter
         index = getNextCell(newState, index);
-        checkSolution = true;
-    }
-
-    let solved = false;
-    if (checkSolution) { //if a letter was pressed, see if the grid has been solved
-      solved = checkGridAgainstAnswers(newState, action.answers)
-    }
-
-    if (solved) {
-      //LOCK ALL LETTERS HERE!
-      //remember to update styling for locked letters
+        if (!newState.cellData[index].locked) { //if the letter wasn't already locked, check grid
+          solved = checkGridAgainstAnswers(newState, action.answers) //has it been solved?
+          if (solved) { //if so, lock all letters in grid and alert user of great success
+            newState.cellData = newState.cellData.map((cell) => ({...cell, locked: true}));
+            console.log(newState.cellData);
+            alert("Well solved, crossworder!");
+          }
+        }
     }
 
     newState.cellData[index].focus = true;
     newState.cellData = updateHighlighting(newState, index); 
+
 
     const crosswordData = {
       cellData: newState.cellData,
@@ -396,10 +394,6 @@ const reducer = (state, action) => {
       cols: newState.cols
     };
     localStorage.setItem("crosswordData", JSON.stringify(crosswordData));
-
-    if (solved) {
-      alert("Well solved, crossworder!");
-    }
 
     return crosswordData; //end keydown
   } else {
@@ -458,9 +452,9 @@ const Crossword = (props) => {
 
   return (
     <Fragment>
-      <Card className='dark'>
+      {/* <Card className='dark'>
         <CrosswordStatus />
-      </Card>
+      </Card> */}
       <Card className='dark'>
         <CrosswordPowerUps />
       </Card>
