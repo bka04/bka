@@ -249,7 +249,7 @@ const reducer = (state, action) => {
     newState.cellData = updateHighlighting(newState, 0);
     return {
       cellData: newState.cellData,
-      selectedCell: 0,
+      selectedCell: 1,
       across: true,
       cols: Math.sqrt(newState.cellData.length),
     };
@@ -279,6 +279,7 @@ const reducer = (state, action) => {
   if (action.type === "powerUp") {
 
     console.log(action.powerUp); //TESTING
+    //error on selectedCell when we first reset grid and click on powerup...
     newState.cellData[newState.selectedCell - 1].wrong = true; //TESTING
 
     //Ready to continue here - handle powerUps
