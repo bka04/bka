@@ -480,9 +480,9 @@ const Crossword = (props) => {
       case "revealLetter":
         dispatch({type: "powerUp", powerUp: "revealLetter", event, answers: props.answers});
         break;
-      case "revealLetterEverywhere":
-        dispatch({type: "powerUp", powerUp: "revealLetterEverywhere", event, answers: props.answers});
-        break;
+      // case "revealLetterEverywhere":
+      //   dispatch({type: "powerUp", powerUp: "revealLetterEverywhere", event, answers: props.answers});
+      //   break;
       case "verifyGrid":
         dispatch({type: "powerUp", powerUp: "verifyGrid", event, answers: props.answers});
         break;

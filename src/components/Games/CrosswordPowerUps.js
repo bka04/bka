@@ -4,7 +4,7 @@ const icons = [
   {id: "verifyWord", imgId: "checkmark", text: "Verify Word"},
   {id: "revealRandomLetter", imgId: "die", text: "Reveal Random Letter"},
   {id: "revealLetter", imgId: "k", text: "Reveal Letter"},
-  {id: "revealLetterEverywhere", imgId: "buyLetter", text: "Reveal Letter Everywhere"},
+  // {id: "revealLetterEverywhere", imgId: "buyLetter", text: "Reveal Letter Everywhere"},
   {id: "verifyGrid", imgId: "check", text: "Verify Grid"},
   {id: "revealWord", imgId: "word", text: "Reveal Word"}
 ];
