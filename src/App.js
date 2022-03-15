@@ -3,7 +3,7 @@ import { Route, Redirect, useLocation } from "react-router-dom";
 import Header from "./components/layout/Header";
 import Home from "./pages/Home";
 import Books from "./pages/Books";
-import Games from "./pages/Games";
+import Crosswords from "./pages/Crosswords";
 import Acrobatics from "./pages/Acrobatics";
 
 const Dev = () => <p>Development stuff coming soon</p>;
@@ -12,7 +12,7 @@ const routes = [
   { path: "/"},
   { path: "/home", Component: Home },
   { path: "/books", Component: Books },
-  { path: "/games", Component: Games },
+  { path: "/crosswords", Component: Crosswords },
   { path: "/acrobatics", Component: Acrobatics },
   { path: "/development", Component: Dev },
 ];

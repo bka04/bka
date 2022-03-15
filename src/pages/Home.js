@@ -22,13 +22,13 @@ const Home = () => {
         </Link>
       </div>
       <div className="homeImageSubContainer2 homeImageSubContainer">
-        <Link to="/games">
+        <Link to="/crosswords">
           <img
             src={require("../assets/acrobatics-2.jpg").default}
             alt="Crossword"
             className="homeImageSub"
           ></img>
-          <p className="homeImageSubText">Games</p>
+          <p className="homeImageSubText">Crosswords</p>
         </Link>
       </div>
       <div className="homeImageSubContainer3 homeImageSubContainer">

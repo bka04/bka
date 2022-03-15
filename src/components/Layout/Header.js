@@ -74,8 +74,8 @@ const Header = (props) => {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/games" activeClassName={classes.active}>
-              Games
+            <NavLink to="/crosswords" activeClassName={classes.active}>
+              Crosswords
             </NavLink>
           </li>
           <li>

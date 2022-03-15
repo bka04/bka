@@ -1,4 +1,4 @@
-import Crossword from "../components/games/Crossword";
+import Crossword from "../components/crosswords/Crossword";
 
 const CELLDATA = [];
 for (let i = 1; i < 26; i++) {
@@ -50,7 +50,7 @@ const DOWNCLUES = [
   { number: 5, text: "See 1 down" },
 ];
 
-const Games = (props) => {
+const Crosswords = (props) => {
   return (
     <Crossword
       initialCrosswordData={CELLDATA}
@@ -61,4 +61,4 @@ const Games = (props) => {
   );
 };
 
-export default Games;
+export default Crosswords;
