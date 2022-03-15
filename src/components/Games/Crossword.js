@@ -294,14 +294,15 @@ const reducer = (state, action) => {
   if (action.type === "powerUp") {
 
 
-    //Ready to continue here - handle powerUps
+    //Ready to continue here - handle reveal random letter powerUp.
+    //Pick something that is not correct?
 
     if (action.powerUp === "revealLetter" || action.powerUp === "revealWord") {
       
       let revealThis = []; //will be letter or word
       if (action.powerUp === "revealLetter") { 
         revealThis = newState.cellData.filter(cell => //selected letter
-          cell.id === newState.cellData[newState.selectedCell - 1]
+          cell.id === newState.cellData[newState.selectedCell - 1].id
         ); 
       } else {
         revealThis = getSelectedWord(newState); //selected word
@@ -339,7 +340,6 @@ const reducer = (state, action) => {
         }
       });
     }
-
 
     const crosswordData = {
       cellData: newState.cellData,
