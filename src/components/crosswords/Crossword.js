@@ -385,8 +385,10 @@ const reducer = (state, action) => {
         newState.cellData[index].focus = true;
         newState.cellData = updateHighlighting(newState, index);
       }
-      newState.cellData[index].value = "";
-      newState.cellData[index].wrong = false;
+      if (!newState.cellData[index].locked) {
+        newState.cellData[index].value = "";
+        newState.cellData[index].wrong = false;
+      }
 
       const crosswordData = {
         cellData: newState.cellData,
