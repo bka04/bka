@@ -293,9 +293,22 @@ const reducer = (state, action) => {
 
   if (action.type === "powerUp") {
 
+    if (action.powerUp === "revealRandomLetter") {
+      const incorrectLetters = newState.cellData.filter(cell => //filter for incorrect letters
+        cell.value !== action.answers[cell.id - 1]
+      );
 
-    //Ready to continue here - handle reveal random letter powerUp.
-    //Pick something that is not correct?
+      if (incorrectLetters.length > 0) { //any incorrect letters? get a random one and reveal
+        const cellID = incorrectLetters[Math.floor(Math.random()*incorrectLetters.length)].id;
+        newState.cellData[cellID - 1].value = action.answers[cellID - 1]; //set answer
+        newState.cellData[cellID - 1].locked = true; //lock it
+        newState.cellData[cellID - 1].wrong = false; //not wrong
+        const solved = checkGridAgainstAnswers(newState, action.answers) //has grid been solved?
+        if (solved) {
+          newState = handleSolvedGrid(newState);
+        }
+      }
+    }
 
     if (action.powerUp === "revealLetter" || action.powerUp === "revealWord") {
       
