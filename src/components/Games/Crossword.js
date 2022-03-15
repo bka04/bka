@@ -229,6 +229,15 @@ const getPrevWord = (state, index) => {
   }
 }
 
+const getSelectedWord = (state) => {
+  const direction = state.across ? "Across" : "Down"; //is across or down selected?
+  const word = state.cellData.filter(cell => //get all data on this word
+    cell[`questionNumber${direction}`] === 
+    state.cellData[state.selectedCell - 1][`questionNumber${direction}`]
+  );
+  return word;
+}
+
 const checkGridAgainstAnswers = (state, answers) => {
   const gridLetters = state.cellData.map(cell => cell.value); //get letters from screen
   return gridLetters.every((val, index) => val === answers[index]); //every letter correct?
@@ -281,15 +290,16 @@ const reducer = (state, action) => {
 
     //Ready to continue here - handle powerUps
 
+    if (action.powerUp === "revealLetter" || action.powerUp === "revealWord") {
+      //need to pull out a getWord function. pass in state is all.
+
+    }
+
     if (action.powerUp === "verifyWord" || action.powerUp === "verifyGrid") {
 
       let verifyThis = []; //will be word or entire grid
       if (action.powerUp === "verifyWord") {
-        const direction = newState.across ? "Across" : "Down"; //is across or down selected?
-        verifyThis = newState.cellData.filter(cell => //get all data on this word
-          cell[`questionNumber${direction}`] === 
-          newState.cellData[newState.selectedCell - 1][`questionNumber${direction}`]
-        );
+        verifyThis = getSelectedWord(newState); //selected word
       } else {
         verifyThis = newState.cellData; //entire grid
       }
