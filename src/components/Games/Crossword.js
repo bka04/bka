@@ -279,10 +279,10 @@ const reducer = (state, action) => {
   if (action.type === "powerUp") {
 
     console.log(action.powerUp); //TESTING
-    //error on selectedCell when we first reset grid and click on powerup...
     newState.cellData[newState.selectedCell - 1].wrong = true; //TESTING
 
     //Ready to continue here - handle powerUps
+    //we have each question's down and across word number to use!
 
 
     const crosswordData = {
@@ -358,18 +358,24 @@ const reducer = (state, action) => {
       return crosswordData;
     }
 
+    let solved = false;
     if (
       action.event.keyCode !== 9 && //not tab
       (action.event.keyCode < 37 || action.event.keyCode > 40) //not left/up/right/down
     ) {
-      //a letter was entered; set to keypress if the letter is not locked
-      if (!newState.cellData[index].locked) {
-        newState.cellData[index].value = action.event.key;
+      //a letter was entered; set to keypress if the letter changed and is not locked; check if solved
+      if (!newState.cellData[index].locked && newState.cellData[index].value !== action.event.key) {
+        newState.cellData[index].value = action.event.key; //set entered letter
+        newState.cellData[index].wrong = false; //clear out any 'wrong' line-through
+        solved = checkGridAgainstAnswers(newState, action.answers) //has grid been solved?
+        if (solved) { //if so, lock all letters in grid and alert user of great success
+          newState.cellData = newState.cellData.map((cell) => ({...cell, locked: true}));
+          alert("Well solved, crossworder!");
+        }
       }
     }
 
     newState.cellData = clearCellDisplay(newState.cellData);
-    let solved = false;
 
     switch (action.event.keyCode) {
       case 37: //left arrow
@@ -392,15 +398,8 @@ const reducer = (state, action) => {
         }
         break;
       default: //letter
-        newState.cellData[index].wrong = false;
-        index = getNextCell(newState, index);
-        if (!newState.cellData[index].locked) { //if the letter wasn't already locked, check grid
-          solved = checkGridAgainstAnswers(newState, action.answers) //has it been solved?
-          if (solved) { //if so, lock all letters in grid and alert user of great success
-            newState.cellData = newState.cellData.map((cell) => ({...cell, locked: true}));
-            console.log(newState.cellData);
-            alert("Well solved, crossworder!");
-          }
+        if (!solved) {
+          index = getNextCell(newState, index);
         }
     }
 
