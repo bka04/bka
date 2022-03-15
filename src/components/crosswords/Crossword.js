@@ -397,20 +397,22 @@ const reducer = (state, action) => {
         newState.cellData = clearCellDisplay(newState.cellData);
         newState.cellData[index].focus = true;
         newState.cellData = updateHighlighting(newState, index);
-      }
-      if (!newState.cellData[index].locked) {
+      }      
+      if (newState.cellData[index].locked) { //if locked, don't delete anything!
+        action.event.keyCode = newState.across ? 37 : 40; //change to left or down arrow!
+      } else { //handle backspace/delete
         newState.cellData[index].value = "";
         newState.cellData[index].wrong = false;
-      }
 
-      const crosswordData = {
-        cellData: newState.cellData,
-        selectedCell: index + 1,
-        across: newState.across,
-        cols: newState.cols
-      };
-      localStorage.setItem("crosswordData", JSON.stringify(crosswordData));
-      return crosswordData;
+        const crosswordData = {
+          cellData: newState.cellData,
+          selectedCell: index + 1,
+          across: newState.across,
+          cols: newState.cols
+        };
+        localStorage.setItem("crosswordData", JSON.stringify(crosswordData));
+        return crosswordData;        
+      }
     } //end backspace/delete
 
     if (
