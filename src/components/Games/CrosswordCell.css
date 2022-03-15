@@ -27,6 +27,10 @@
   color: darkblue;
 }
 
+.cellWrong {
+  text-decoration: red line-through;
+}
+
 .cell {
   position: relative;
 }

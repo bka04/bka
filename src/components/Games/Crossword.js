@@ -277,7 +277,11 @@ const reducer = (state, action) => {
   } //end selectCellFromClue
 
   if (action.type === "powerUp") {
-    console.log(action.powerUp);
+
+    console.log(action.powerUp); //TESTING
+    newState.cellData[newState.selectedCell - 1].wrong = true; //TESTING
+
+    //Ready to continue here - handle powerUps
 
 
     const crosswordData = {
@@ -325,6 +329,7 @@ const reducer = (state, action) => {
         newState.cellData = updateHighlighting(newState, index);
       }
       newState.cellData[index].value = "";
+      newState.cellData[index].wrong = false;
 
       const crosswordData = {
         cellData: newState.cellData,
@@ -386,6 +391,7 @@ const reducer = (state, action) => {
         }
         break;
       default: //letter
+        newState.cellData[index].wrong = false;
         index = getNextCell(newState, index);
         if (!newState.cellData[index].locked) { //if the letter wasn't already locked, check grid
           solved = checkGridAgainstAnswers(newState, action.answers) //has it been solved?

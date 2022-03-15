@@ -9,6 +9,7 @@ for (let i = 1; i < 26; i++) {
 
   let locked = false;
   let disabled = false;
+  let wrong = false;
   //TESTING
   // if (i === 8 || i === 14) {
   //   disabled = true;
@@ -20,7 +21,8 @@ for (let i = 1; i < 26; i++) {
     disabled,
     focus,
     value: "",
-    locked
+    locked,
+    wrong
   });
 }
 

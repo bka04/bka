@@ -13,6 +13,7 @@ const CrosswordGrid = (props) => {
       disabled={cell.disabled ? 'disabled' : ''}
       highlight={cell.highlight}
       locked={cell.locked}
+      wrong={cell.wrong}
       data-cellnum={cell.id}
       key={cell.id}
       focus={cell.focus}
