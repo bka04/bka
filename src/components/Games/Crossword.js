@@ -278,11 +278,32 @@ const reducer = (state, action) => {
 
   if (action.type === "powerUp") {
 
-    console.log(action.powerUp); //TESTING
-    newState.cellData[newState.selectedCell - 1].wrong = true; //TESTING
 
     //Ready to continue here - handle powerUps
-    //we have each question's down and across word number to use!
+
+    if (action.powerUp === "verifyWord" || action.powerUp === "verifyGrid") {
+
+      let verifyThis = []; //will be word or entire grid
+      if (action.powerUp === "verifyWord") {
+        const direction = newState.across ? "Across" : "Down"; //is across or down selected?
+        verifyThis = newState.cellData.filter(cell => //get all data on this word
+          cell[`questionNumber${direction}`] === 
+          newState.cellData[newState.selectedCell - 1][`questionNumber${direction}`]
+        );
+      } else {
+        verifyThis = newState.cellData; //entire grid
+      }
+
+      verifyThis.forEach(function(cell) {
+        //check what was entered vs the answer
+        let correct = (newState.cellData[cell.id - 1].value === action.answers[cell.id - 1]);
+        if (correct) { //is letter entered correct?
+          newState.cellData[cell.id - 1].locked = true; //set locked to true
+        } else {
+          newState.cellData[cell.id - 1].wrong = true; //set wrong to true
+        }
+      });
+    }
 
 
     const crosswordData = {
@@ -451,22 +472,22 @@ const Crossword = (props) => {
   const powerUpOnClickHandler = (event) => {
     switch(event.target.id) {
       case "verifyWord":
-        dispatch({type: "powerUp", powerUp: "verifyWord", event});
+        dispatch({type: "powerUp", powerUp: "verifyWord", event, answers: props.answers});
         break;
       case "revealRandomLetter":
-        dispatch({type: "powerUp", powerUp: "revealRandomLetter", event});  
+        dispatch({type: "powerUp", powerUp: "revealRandomLetter", event, answers: props.answers});  
         break;
       case "revealLetter":
-        dispatch({type: "powerUp", powerUp: "revealLetter", event});
+        dispatch({type: "powerUp", powerUp: "revealLetter", event, answers: props.answers});
         break;
       case "revealLetterEverywhere":
-        dispatch({type: "powerUp", powerUp: "revealLetterEverywhere", event});
+        dispatch({type: "powerUp", powerUp: "revealLetterEverywhere", event, answers: props.answers});
         break;
       case "verifyGrid":
-        dispatch({type: "powerUp", powerUp: "verifyGrid", event});
+        dispatch({type: "powerUp", powerUp: "verifyGrid", event, answers: props.answers});
         break;
       case "revealWord":
-        dispatch({type: "powerUp", powerUp: "revealWord", event});
+        dispatch({type: "powerUp", powerUp: "revealWord", event, answers: props.answers});
         break;
       default:
         break;  
