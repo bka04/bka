@@ -243,6 +243,12 @@ const checkGridAgainstAnswers = (state, answers) => {
   return gridLetters.every((val, index) => val === answers[index]); //every letter correct?
 }
 
+const handleSolvedGrid = (state) => {
+  state.cellData = state.cellData.map((cell) => ({...cell, locked: true}));
+  alert("Well solved, crossworder!");
+  return state;
+}
+
 const reducer = (state, action) => {
   if (action.type === "loadStateFromStorage") {
     return action.storedCrosswordData;
@@ -291,7 +297,26 @@ const reducer = (state, action) => {
     //Ready to continue here - handle powerUps
 
     if (action.powerUp === "revealLetter" || action.powerUp === "revealWord") {
-      //need to pull out a getWord function. pass in state is all.
+      
+      let revealThis = []; //will be letter or word
+      if (action.powerUp === "revealLetter") { 
+        revealThis = newState.cellData.filter(cell => //selected letter
+          cell.id === newState.cellData[newState.selectedCell - 1]
+        ); 
+      } else {
+        revealThis = getSelectedWord(newState); //selected word
+      }
+
+      revealThis.forEach(function(cell) {
+        newState.cellData[cell.id - 1].value = action.answers[cell.id - 1]; //set answer
+        newState.cellData[cell.id - 1].locked = true; //lock it
+        newState.cellData[cell.id - 1].wrong = false; //not wrong
+      });
+
+      const solved = checkGridAgainstAnswers(newState, action.answers) //has grid been solved?
+      if (solved) {
+        newState = handleSolvedGrid(newState);
+      }
 
     }
 
@@ -400,8 +425,7 @@ const reducer = (state, action) => {
         newState.cellData[index].wrong = false; //clear out any 'wrong' line-through
         solved = checkGridAgainstAnswers(newState, action.answers) //has grid been solved?
         if (solved) { //if so, lock all letters in grid and alert user of great success
-          newState.cellData = newState.cellData.map((cell) => ({...cell, locked: true}));
-          alert("Well solved, crossworder!");
+          newState = handleSolvedGrid(newState);
         }
       }
     }
