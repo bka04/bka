@@ -3,7 +3,7 @@ import Button from "../UI/Button";
 import Card from "../UI/Card";
 import CrosswordClues from "./CrosswordClues";
 import CrosswordGrid from "./CrosswordGrid";
-import CrosswordStatus from "./CrosswordStatus";
+// import CrosswordStatus from "./CrosswordStatus";
 import CrosswordPowerUps from "./CrosswordPowerUps";
 import './Crossword.css';
 import CrosswordActiveClue from "./CrosswordActiveClue";
@@ -276,6 +276,20 @@ const reducer = (state, action) => {
     return crosswordData;
   } //end selectCellFromClue
 
+  if (action.type === "powerUp") {
+    console.log(action.powerUp);
+
+
+    const crosswordData = {
+      cellData: newState.cellData,
+      selectedCell: newState.selectedCell,
+      across: newState.across,
+      cols: newState.cols,
+    };
+    localStorage.setItem("crosswordData", JSON.stringify(crosswordData));
+    return crosswordData;
+  } //end powerUp
+
   action.event.preventDefault();
   const cellNum = parseInt(action.event.target.dataset.cellnum);
   let index = cellNum - 1;
@@ -406,10 +420,10 @@ const Crossword = (props) => {
 
   useEffect(() => {
     const storedCrosswordData = JSON.parse(
-      localStorage.getItem("crosswordData")
+      localStorage.getItem("crosswordData") //get data saved to browswer
     );
 
-    if (storedCrosswordData !== null) {
+    if (storedCrosswordData !== null) { //was there data saved to browser?
       dispatch({ type: "loadStateFromStorage", storedCrosswordData });
     } else {
       dispatch({ type: "resetGrid", initialCrosswordData: props.initialCrosswordData });
@@ -427,6 +441,32 @@ const Crossword = (props) => {
   const clueOnClickHandler = (event) => {
     dispatch({ type: "selectCellFromClue", event });
   };
+
+  const powerUpOnClickHandler = (event) => {
+    switch(event.target.id) {
+      case "verifyWord":
+        dispatch({type: "powerUp", powerUp: "verifyWord", event});
+        break;
+      case "revealRandomLetter":
+        dispatch({type: "powerUp", powerUp: "revealRandomLetter", event});  
+        break;
+      case "revealLetter":
+        dispatch({type: "powerUp", powerUp: "revealLetter", event});
+        break;
+      case "revealLetterEverywhere":
+        dispatch({type: "powerUp", powerUp: "revealLetterEverywhere", event});
+        break;
+      case "verifyGrid":
+        dispatch({type: "powerUp", powerUp: "verifyGrid", event});
+        break;
+      case "revealWord":
+        dispatch({type: "powerUp", powerUp: "revealWord", event});
+        break;
+      default:
+        break;  
+    }
+
+  }
 
   const resetGrid = (event) => {
     if (window.confirm("Are you sure you want to reset the puzzle?")) {
@@ -456,7 +496,9 @@ const Crossword = (props) => {
         <CrosswordStatus />
       </Card> */}
       <Card className='dark'>
-        <CrosswordPowerUps />
+        <CrosswordPowerUps 
+          onClick={powerUpOnClickHandler}
+        />
       </Card>
       <div className='crosswordContent'>
         <Card className='dark crosswordCluesCard'>
