@@ -392,17 +392,21 @@ const reducer = (state, action) => {
   } else if (action.type === "keydown") {
     if (action.event.keyCode === 8 || action.event.keyCode === 46) {
       //backspace/delete
+      let onOriginalCell = true; //indicator for being on the original cell the user hit backspace/delete on
       if (newState.cellData[index].value === "") {
         index = getPrevCell(newState, index);
         newState.cellData = clearCellDisplay(newState.cellData);
         newState.cellData[index].focus = true;
         newState.cellData = updateHighlighting(newState, index);
+        onOriginalCell = false; //no longer on the original cell - we got previous cell
       }      
-      if (newState.cellData[index].locked) { //if locked, don't delete anything!
+      if (newState.cellData[index].locked && onOriginalCell) { //if locked and looking at the cell user hit delete on, act like left/down arrow
         action.event.keyCode = newState.across ? 37 : 40; //change to left or down arrow!
       } else { //handle backspace/delete
-        newState.cellData[index].value = "";
-        newState.cellData[index].wrong = false;
+        if (!newState.cellData[index].locked) { //if locked, don't delete anything!
+          newState.cellData[index].value = "";
+          newState.cellData[index].wrong = false;
+        }
 
         const crosswordData = {
           cellData: newState.cellData,
