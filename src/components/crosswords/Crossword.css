@@ -25,15 +25,26 @@
   }
 }
 
-@media (max-width: 850px) {
-  .crosswordGridCard {
+@media (max-width: 800px) {
+  .crosswordGridCard.mediumGrid {
     order: -1;
   }
 }
 
-@media (max-width: 850px) {
-  .crosswordContent {
+@media (max-width: 800px) {
+  .crosswordContent.mediumGrid {
     flex-wrap: wrap;
   }
 }
 
+@media (max-width: 650px) {
+  .crosswordGridCard.smallGrid {
+    order: -1;
+  }
+}
+
+@media (max-width: 650px) {
+  .crosswordContent.smallGrid {
+    flex-wrap: wrap;
+  }
+}

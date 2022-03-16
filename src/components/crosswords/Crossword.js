@@ -493,6 +493,7 @@ const reducer = (state, action) => {
   }
 };
 
+
 const Crossword = (props) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
@@ -578,7 +579,7 @@ const Crossword = (props) => {
           onClick={powerUpOnClickHandler}
         />
       </Card>
-      <div className='crosswordContent'>
+      <div className={`crosswordContent ${state.cols > 5 ? 'mediumGrid' : 'smallGrid'}`}>
         <Card className='dark crosswordCluesCard'>
           <CrosswordClues 
             onClick={clueOnClickHandler}
@@ -588,7 +589,7 @@ const Crossword = (props) => {
             selectedQuestion={getSelectedQuestionNumber(state, 'Across')}
           />
         </Card>
-        <Card className='dark crosswordGridCard'>
+        <Card className={`dark crosswordGridCard ${state.cols > 5 ? 'mediumGrid' : 'smallGrid'}`}>
           <CrosswordGrid
             cellData={state.cellData}
             cols={state.cols}
