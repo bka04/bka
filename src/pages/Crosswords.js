@@ -7,18 +7,18 @@ const ACROSSCLUES = [
   { number: 1, text: "Happy" },
   { number: 5, text: "Manchester United defender Luke" },
   { number: 9, text: "Telephus's mother in mythology" },
-  { number: 10, text: "pure" },
-  { number: 11, text: "bloc" },
-  { number: 12, text: "ages" },
+  { number: 10, text: "Free from contaminant" },
+  { number: 11, text: "Voting or country group" },
+  { number: 12, text: "Board game specification" },
   { number: 13, text: "Garment of gumdrops?" },
   { number: 15, text: "Jane or John" },
   { number: 16, text: "Lecture on lollipops?" },
   { number: 22, text: "Iraq neighbor" },
-  { number: 23, text: "icon" },
-  { number: 24, text: "disc" },
-  { number: 25, text: "mine" },
-  { number: 26, text: "stye" },
-  { number: 27, text: "edge" }
+  { number: 23, text: "Desktop shortcut" },
+  { number: 24, text: "Word preceding golf or jockey" },
+  { number: 25, text: "Not yours" },
+  { number: 26, text: "Eyelid lump" },
+  { number: 27, text: "Microsoft's web browser" }
 ];
 
 const DOWNCLUES = [
@@ -28,15 +28,15 @@ const DOWNCLUES = [
   { number: 4, text: "decadence" },
   { number: 5, text: "Four-dimensional continuum" },
   { number: 6, text: "Les Miserables author" },
-  { number: 7, text: "area" },
-  { number: 8, text: "west" },
-  { number: 14, text: "rot" },
-  { number: 16, text: "sids" },
-  { number: 17, text: "writ" },
-  { number: 18, text: "easy" },
-  { number: 19, text: "acid" },
-  { number: 20, text: "long" },
-  { number: 21, text: "knee" }
+  { number: 7, text: "Pi * r-squared for a circle" },
+  { number: 8, text: "Columbus's direction" },
+  { number: 14, text: "Decay" },
+  { number: 16, text: "Crib death" },
+  { number: 17, text: "___ of habeas corpus" },
+  { number: 18, text: "Not hard" },
+  { number: 19, text: "Base counterpart" },
+  { number: 20, text: "Like Rip Van Winkle's slumber" },
+  { number: 21, text: "It's slapped in laughter" }
 ];
 
 // const ANSWERTEXT = 'reactarguepairsisletdeeds';
