@@ -29,7 +29,7 @@ const DOWNCLUES = [
   { number: 5, text: "Four-dimensional continuum" },
   { number: 6, text: "Les Miserables author" },
   { number: 7, text: "Pi * r-squared for a circle" },
-  { number: 8, text: "Columbus's direction" },
+  { number: 8, text: "Columbus's voyage direction" },
   { number: 14, text: "Decay" },
   { number: 16, text: "Crib death" },
   { number: 17, text: "___ of habeas corpus" },
