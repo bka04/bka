@@ -25,7 +25,7 @@ const DOWNCLUES = [
   { number: 1, text: "Jabbers" },
   { number: 2, text: "Athleisure giant, colloquially" },
   { number: 3, text: "Les Miserables song ABC Cafe/Red and Black: 'I am ___! I am aghast! Is Marius in love at last?'" },
-  { number: 4, text: "decadence" },
+  { number: 4, text: "Luxurious self-indulgence" },
   { number: 5, text: "Four-dimensional continuum" },
   { number: 6, text: "Les Miserables author" },
   { number: 7, text: "Pi * r-squared for a circle" },
