@@ -19,19 +19,19 @@
   }
 }
 
-@media (max-width: 800px) {
+@media (max-width: 1000px) {
   .crosswordContent {
     gap: 0px;
   }
 }
 
-@media (max-width: 650px) {
+@media (max-width: 850px) {
   .crosswordGridCard {
     order: -1;
   }
 }
 
-@media (max-width: 650px) {
+@media (max-width: 850px) {
   .crosswordContent {
     flex-wrap: wrap;
   }
