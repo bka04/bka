@@ -11,8 +11,8 @@ const Dev = () => <p>Development stuff coming soon</p>;
 const routes = [
   { path: "/"},
   { path: "/home", Component: Home },
-  { path: "/books", Component: Books },
   { path: "/crosswords", Component: Crosswords },
+  { path: "/books", Component: Books },
   { path: "/acrobatics", Component: Acrobatics },
   { path: "/development", Component: Dev },
 ];

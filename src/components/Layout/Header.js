@@ -69,13 +69,13 @@ const Header = (props) => {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/books" activeClassName={classes.active}>
-              Books
+            <NavLink to="/crosswords" activeClassName={classes.active}>
+              Crosswords
             </NavLink>
           </li>
           <li>
-            <NavLink to="/crosswords" activeClassName={classes.active}>
-              Crosswords
+            <NavLink to="/books" activeClassName={classes.active}>
+              Books
             </NavLink>
           </li>
           <li>
