@@ -1,35 +1,7 @@
 import Crossword from "../components/crosswords/Crossword";
 
-const CELLDATA = [];
-//const BLACKSQUARES = [];
-const BLACKSQUARES = [5, 14, 23, 37, 38, 39, 43, 44, 45, 59, 68, 77];
-
-for (let i = 1; i < 82; i++) {
-  let focus = false;
-  if (i === 1) {
-    focus = true;
-  }
-
-  let locked = false;
-  let disabled = false;
-  let wrong = false;
-
-  if (BLACKSQUARES.includes(i)) {
-    disabled = true;
-  }
-
-  CELLDATA.push({
-    id: i,
-    disabled,
-    focus,
-    value: "",
-    locked,
-    wrong
-  });
-}
 
 const ANSWERTEXT = 'glad shawauge purebloc agessugarcoat   doe   sweettalkiran icondisc minestye edge';
-const ANSWERS = ANSWERTEXT.split('').map(letter => letter.replace(' ', ''));
 
 const ACROSSCLUES = [
   { number: 1, text: "Happy" },
@@ -67,14 +39,7 @@ const DOWNCLUES = [
   { number: 21, text: "knee" }
 ];
 
-
-// const ANSWERS = [
-//   'r', 'e', 'a', 'c', 't', 
-//   'a', 'r', 'g', 'u', 'e', 
-//   'p', 'a', 'i', 'r', 's', 
-//   'i', 's', 'l', 'e', 't',
-//   'd', 'e', 'e', 'd', 's'
-// ];
+// const ANSWERTEXT = 'reactarguepairsisletdeeds';
 
 // const ACROSSCLUES = [
 //   { number: 1, text: "Respond.  Also a popular JavaScript framework" },
@@ -91,6 +56,33 @@ const DOWNCLUES = [
 //   { number: 4, text: "Healed" },
 //   { number: 5, text: "See 1 down" },
 // ];
+
+const ANSWERS = ANSWERTEXT.split('').map(letter => letter.replace(' ', ''));
+const CELLDATA = [];
+
+for (let i = 0; i < ANSWERS.length; i++) {
+  let focus = false;
+  if (i === 0) {
+    focus = true;
+  }
+
+  let locked = false;
+  let disabled = false;
+  let wrong = false;
+
+  if (ANSWERS[i] === '') {
+    disabled = true;
+  }
+
+  CELLDATA.push({
+    id: i+1,
+    disabled,
+    focus,
+    value: "",
+    locked,
+    wrong
+  });
+}
 
 const Crosswords = (props) => {
   return (
