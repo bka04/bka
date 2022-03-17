@@ -20,7 +20,7 @@ const Home = () => {
         />
       </div> */}
       {pages.map((page) => (
-        <div key="path" className={`homeImageSubContainer ${page.class}`}>
+        <div key={page.path} className={`homeImageSubContainer ${page.class}`}>
           <Link to={page.path}>
             <img
               src={require(`../assets/${page.img}`).default}
