@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Crossword from "../components/crosswords/Crossword";
 
 const PUZZLES = [
@@ -130,6 +131,12 @@ for (let i = 0; i < PUZZLES.length; i++) {
 
 
 const Crosswords = (props) => {
+  const [currentPuzzle, setCurrentPuzzle] = useState(PUZZLES[1].id);
+  const [currentPuzzleSolved, setCurrentPuzzleSolved] = useState(false);
+
+  //will need a next puzzle button here
+  //will need to pass back when a puzzle is solved!
+
   return (
     <Crossword
       initialCrosswordData={PUZZLES[1].cellData}
