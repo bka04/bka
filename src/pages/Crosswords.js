@@ -3,6 +3,24 @@ import Crossword from "../components/crosswords/Crossword";
 const PUZZLES = [
   {
     id: 1,
+    answerText: 'reactarguepairsisletdeeds',
+    acrossClues: [
+      { number: 1, text: "Respond.  Also a popular JavaScript framework" },
+      { number: 6, text: "Debate" },
+      { number: 7, text: "These are worth two points in cribbage" },
+      { number: 8, text: "Florida Keys, e.g." },
+      { number: 9, text: "Home ownership documents" }
+    ],
+    downClues: [
+      { number: 1, text: "With 5 down, same day COVID exams" },
+      { number: 2, text: "Remove" },
+      { number: 3, text: "Popular software development approach" },
+      { number: 4, text: "Healed" },
+      { number: 5, text: "See 1 down" }
+    ]
+  },
+  {
+    id: 2,
     answerText: 'glad shawauge purebloc agessugarcoat   doe   sweettalkiran icondisc minestye edge',
     acrossClues: [
       { number: 1, text: "Happy" },
@@ -40,7 +58,7 @@ const PUZZLES = [
     ]
   },
   {
-    id: 2,
+    id: 3,
     answerText: 'set   tagpain saleecru ironcheckmate   lip   queensideurdu odinages nerdden   ats',
     acrossClues: [
       { number: 1, text: "" },
@@ -75,24 +93,6 @@ const PUZZLES = [
       { number: 18, text: "" },
       { number: 19, text: "" },
       { number: 20, text: "" }
-    ]
-  },
-  {
-    id: 3,
-    answerText: 'reactarguepairsisletdeeds',
-    acrossClues: [
-      { number: 1, text: "Respond.  Also a popular JavaScript framework" },
-      { number: 6, text: "Debate" },
-      { number: 7, text: "These are worth two points in cribbage" },
-      { number: 8, text: "Florida Keys, e.g." },
-      { number: 9, text: "Home ownership documents" }
-    ],
-    downClues: [
-      { number: 1, text: "With 5 down, same day COVID exams" },
-      { number: 2, text: "Remove" },
-      { number: 3, text: "Popular software development approach" },
-      { number: 4, text: "Healed" },
-      { number: 5, text: "See 1 down" }
     ]
   }
 ]
@@ -132,10 +132,10 @@ for (let i = 0; i < PUZZLES.length; i++) {
 const Crosswords = (props) => {
   return (
     <Crossword
-      initialCrosswordData={PUZZLES[0].cellData}
-      acrossClues={PUZZLES[0].acrossClues}
-      downClues={PUZZLES[0].downClues}
-      answers={PUZZLES[0].answers}
+      initialCrosswordData={PUZZLES[1].cellData}
+      acrossClues={PUZZLES[1].acrossClues}
+      downClues={PUZZLES[1].downClues}
+      answers={PUZZLES[1].answers}
     />
   );
 };
