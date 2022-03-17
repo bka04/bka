@@ -35,7 +35,7 @@ const DOWNCLUES = [
   { number: 17, text: "___ of habeas corpus" },
   { number: 18, text: "Not hard" },
   { number: 19, text: "Base counterpart" },
-  { number: 20, text: "Like Rip Van Winkle's slumber" },
+  { number: 20, text: "Like Rip Van Winkle's slumber or Gandalf's beard" },
   { number: 21, text: "It's slapped in laughter" }
 ];
 
