@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Crossword from "../components/crosswords/Crossword";
 
 const PUZZLES = [
   {
-    id: 1,
+    id: "1",
     answerText: 'reactarguepairsisletdeeds',
     acrossClues: [
       { number: 1, text: "Respond.  Also a popular JavaScript framework" },
@@ -21,7 +21,7 @@ const PUZZLES = [
     ]
   },
   {
-    id: 2,
+    id: "2",
     answerText: 'glad shawauge purebloc agessugarcoat   doe   sweettalkiran icondisc minestye edge',
     acrossClues: [
       { number: 1, text: "Happy" },
@@ -59,7 +59,7 @@ const PUZZLES = [
     ]
   },
   {
-    id: 3,
+    id: "3",
     answerText: 'set   tagpain saleecru ironcheckmate   lip   queensideurdu odinages nerdden   ats',
     acrossClues: [
       { number: 1, text: "" },
@@ -129,24 +129,37 @@ for (let i = 0; i < PUZZLES.length; i++) {
   }
 }
 
+const defaultID = PUZZLES[1].id; //testing
 
 const Crosswords = (props) => {
-  const [currentPuzzle, setCurrentPuzzle] = useState(PUZZLES[1].id);
+  const [currentPuzzle, setCurrentPuzzle] = useState(defaultID);
 
-  const nextPuzzleHandler = () => {
+  useEffect(() => {
+    const localCurrentPuzzle = localStorage.getItem("currentPuzzle") //get data saved to browswer
+
+    if (localCurrentPuzzle !== null) { //was there data saved to browser?
+      setCurrentPuzzle(localCurrentPuzzle); //use it
+    } else { //if not, save data to browser
+      localStorage.setItem("currentPuzzle", currentPuzzle);
+    }
+  }, [currentPuzzle]);
+
+  const nextPuzzleHandler = () => { //use previous puzzle's id to get the next puzzle in array
+    let newPuzzle = '';
     setCurrentPuzzle((prevPuzzle) => {
-      //get next puzzle in case it is not simply the id + 1
       const puzzleIndex = PUZZLES.findIndex(puzzle => puzzle.id === prevPuzzle);
-      return PUZZLES[puzzleIndex + 1].id;
+      newPuzzle = PUZZLES[puzzleIndex + 1].id;
+      return newPuzzle;
     })
+    localStorage.setItem("currentPuzzle", newPuzzle);
   }
 
   return (
     <Crossword
-      initialCrosswordData={PUZZLES[1].cellData}
-      acrossClues={PUZZLES[1].acrossClues}
-      downClues={PUZZLES[1].downClues}
-      answers={PUZZLES[1].answers}
+      initialCrosswordData={PUZZLES.find(puzzle => puzzle.id === currentPuzzle).cellData}
+      acrossClues={PUZZLES.find(puzzle => puzzle.id === currentPuzzle).acrossClues}
+      downClues={PUZZLES.find(puzzle => puzzle.id === currentPuzzle).downClues}
+      answers={PUZZLES.find(puzzle => puzzle.id === currentPuzzle).answers}
       onNextPuzzle={nextPuzzleHandler}
     />
   );
