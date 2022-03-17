@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import "./Home.css";
+import Card from "../components/UI/Card";
 
 const pages = [
   { path: "/crosswords", class: "homeImageSubContainer1", img: "crosswordcat.jpg", text: "Crosswords"},
@@ -10,7 +11,7 @@ const pages = [
 
 const Home = () => {
   return (
-    <div className="homeImagesContainer">
+    <Card className="homeImagesContainer dark">
       {/* <div className="homeImageMainContainer">
         <img
           src={require("../assets/brent.jpg").default}
@@ -30,7 +31,7 @@ const Home = () => {
           </Link>
         </div>
       ))}
-    </div>
+    </Card>
   );
 };
 
