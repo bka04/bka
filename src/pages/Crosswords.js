@@ -132,10 +132,14 @@ for (let i = 0; i < PUZZLES.length; i++) {
 
 const Crosswords = (props) => {
   const [currentPuzzle, setCurrentPuzzle] = useState(PUZZLES[1].id);
-  const [currentPuzzleSolved, setCurrentPuzzleSolved] = useState(false);
 
-  //will need a next puzzle button here
-  //will need to pass back when a puzzle is solved!
+  const nextPuzzleHandler = () => {
+    setCurrentPuzzle((prevPuzzle) => {
+      //get next puzzle in case it is not simply the id + 1
+      const puzzleIndex = PUZZLES.findIndex(puzzle => puzzle.id === prevPuzzle);
+      return PUZZLES[puzzleIndex + 1].id;
+    })
+  }
 
   return (
     <Crossword
@@ -143,6 +147,7 @@ const Crosswords = (props) => {
       acrossClues={PUZZLES[1].acrossClues}
       downClues={PUZZLES[1].downClues}
       answers={PUZZLES[1].answers}
+      onNextPuzzle={nextPuzzleHandler}
     />
   );
 };
