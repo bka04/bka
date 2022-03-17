@@ -2,8 +2,8 @@ import { Link } from "react-router-dom";
 import "./Home.css";
 
 const pages = [
-  { path: "/crosswords", class: "homeImageSubContainer1", img: "acrobatics-1.jpg", text: "Crosswords"},
-  { path: "/books", class: "homeImageSubContainer2", img: "acrobatics-2.jpg", text: "Books"},
+  { path: "/crosswords", class: "homeImageSubContainer1", img: "crosswordcat.jpg", text: "Crosswords"},
+  { path: "/books", class: "homeImageSubContainer2", img: "books.jpg", text: "Books"},
   { path: "/acrobatics", class: "homeImageSubContainer3", img: "acrobatics-3.jpg", text: "Acrobatics"},
   { path: "/development", class: "homeImageSubContainer4", img: "acrobatics-4.jpg", text: "Web Development"},
 ];
