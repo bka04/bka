@@ -6,7 +6,7 @@ import Books from "./pages/Books";
 import Crosswords from "./pages/Crosswords";
 import Acrobatics from "./pages/Acrobatics";
 
-const Dev = () => <p>Development stuff coming soon</p>;
+const Dev = () => <a href="https://github.com/bka04">Github repo</a>;
 
 const routes = [
   { path: "/"},
