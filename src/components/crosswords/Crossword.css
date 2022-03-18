@@ -53,3 +53,14 @@
   display: flex;
   justify-content: center;
 }
+
+.crosswordFooter {
+  display: flex;
+  flex-direction: column;
+  margin-top: 50px;
+  gap: 20px;
+}
+
+.crosswordFooter .btn {
+  width: 230px;
+}

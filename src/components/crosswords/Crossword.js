@@ -649,14 +649,16 @@ const Crossword = (props) => {
           />
         </Card>
       </div>
-      <Button className="resetBtn" onClick={resetGrid}>
-        Reset Current Puzzle
-      </Button>
-      <Button className="resetBtn" onClick={startOver}>
-        Start Over From 1st Puzzle
-      </Button>
-      <div>
-        <p>Game icons made by Freepik from www.flaticon.com</p>
+      <div className='crosswordFooter'>
+        <Button className="resetBtn" onClick={resetGrid}>
+          Reset Current Puzzle
+        </Button>
+        <Button className="resetBtn" onClick={startOver}>
+          Start Over From 1st Puzzle
+        </Button>
+        <div>
+          <p>Game icons made by Freepik from www.flaticon.com</p>
+        </div>
       </div>
     </Fragment>
   );
