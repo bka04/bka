@@ -70,27 +70,27 @@ const PUZZLES = [
       { number: 15, text: "Half of a monarch's bed?" },
       { number: 21, text: "Language of Pakistan" },
       { number: 22, text: "Overseer of Valhalla" },
-      { number: 23, text: "" },
+      { number: 23, text: "Periods" },
       { number: 24, text: "Jock's counterpart" },
       { number: 25, text: "Thieves' locale" },
       { number: 26, text: "Alphabet position after R" }
     ],
     downClues: [
-      { number: 1, text: "" },
-      { number: 2, text: "" },
-      { number: 3, text: "" },
+      { number: 1, text: "Reqt." },
+      { number: 2, text: "Sometimes seen on a 9-down 4-down" },
+      { number: 3, text: "Bore" },
       { number: 4, text: "Lipinski or Reid" },
-      { number: 5, text: "" },
+      { number: 5, text: "Heaps" },
       { number: 6, text: "Kelly who sang in the rain" },
       { number: 8, text: "Cell's central unit" },
       { number: 9, text: "Marge or Lisa" },
-      { number: 13, text: "" },
+      { number: 13, text: "Next of ___" },
       { number: 15, text: "Nathan Chen's jump" },
-      { number: 16, text: "" },
+      { number: 16, text: "Desire" },
       { number: 17, text: "Biblical garden" },
-      { number: 18, text: "" },
-      { number: 19, text: "" },
-      { number: 20, text: "" }
+      { number: 18, text: "Lightbulb cause" },
+      { number: 19, text: "Earth" },
+      { number: 20, text: "Burnt at a barbeque" }
     ]
   }
 ]
