@@ -162,6 +162,12 @@ const Crosswords = (props) => {
     localStorage.setItem("currentPuzzle", newPuzzle);
   }
 
+  const startOverHandler = () => { //start over from the first puzzle
+    setCurrentPuzzle(defaultID);
+    setIsThisLastPuzzle(false);
+    localStorage.setItem("currentPuzzle", defaultID);
+  }
+
   return (
     <Crossword
       initialCrosswordData={PUZZLES.find(puzzle => puzzle.id === currentPuzzle).cellData}
@@ -169,6 +175,7 @@ const Crosswords = (props) => {
       downClues={PUZZLES.find(puzzle => puzzle.id === currentPuzzle).downClues}
       answers={PUZZLES.find(puzzle => puzzle.id === currentPuzzle).answers}
       onNextPuzzle={nextPuzzleHandler}
+      onStartOver={startOverHandler}
       isThisLastPuzzle={isThisLastPuzzle}
     />
   );
