@@ -3,7 +3,7 @@ import { useEffect, useReducer, useCallback } from "react";
 
 import classes from "./Header.module.css";
 
-const WINDOWBREAKPOINT = 525;
+const WINDOWBREAKPOINT = 675;
 
 const initialState = {
   showNavLinks: true,
