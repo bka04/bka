@@ -48,3 +48,8 @@
     flex-wrap: wrap;
   }
 }
+
+.nextPuzzleDiv {
+  display: flex;
+  justify-content: center;
+}

@@ -73,7 +73,8 @@ const initialState = {
   cellData: [],
   selectedCell: 0,
   across: true,
-  cols: 0
+  cols: 0,
+  solved: false
 };
 
 const updateHighlighting = (state, index) => {
@@ -246,6 +247,7 @@ const checkGridAgainstAnswers = (state, answers) => {
 const handleSolvedGrid = (state) => {
   state.cellData = state.cellData.map((cell) => ({...cell, locked: true}));
   alert("Well solved, crossworder!");
+  state.solved = true;
   return state;
 }
 
@@ -255,6 +257,18 @@ const reducer = (state, action) => {
   }
 
   let newState = {...state, cellData: state.cellData.slice()}; //to avoid directly mutating state
+
+  if (action.type === "setSolved") {
+    const crosswordData = {
+      cellData: newState.cellData,
+      selectedCell: newState.selectedCell,
+      across: newState.across,
+      cols: newState.cols,
+      solved: true
+    };
+    localStorage.setItem("crosswordData", JSON.stringify(crosswordData));
+    return crosswordData;
+  }
 
   if (action.type === "resetGrid") {
     localStorage.removeItem("crosswordData");
@@ -267,6 +281,7 @@ const reducer = (state, action) => {
       selectedCell: 1,
       across: true,
       cols: Math.sqrt(newState.cellData.length),
+      solved: false
     };
   } //end resetGrid
 
@@ -286,6 +301,7 @@ const reducer = (state, action) => {
       selectedCell: index + 1,
       across: newState.across,
       cols: newState.cols,
+      solved: newState.solved
     };
     localStorage.setItem("crosswordData", JSON.stringify(crosswordData));
     return crosswordData;
@@ -359,6 +375,7 @@ const reducer = (state, action) => {
       selectedCell: newState.selectedCell,
       across: newState.across,
       cols: newState.cols,
+      solved: newState.solved
     };
     localStorage.setItem("crosswordData", JSON.stringify(crosswordData));
     return crosswordData;
@@ -386,6 +403,7 @@ const reducer = (state, action) => {
       selectedCell: cellNum,
       across: newState.across,
       cols: newState.cols,
+      solved: newState.solved
     };
     localStorage.setItem("crosswordData", JSON.stringify(crosswordData));
     return crosswordData; //end click (mousedown) or space/enter keydown
@@ -408,7 +426,8 @@ const reducer = (state, action) => {
         cellData: newState.cellData,
         selectedCell: index + 1,
         across: newState.across,
-        cols: newState.cols
+        cols: newState.cols,
+        solved: newState.solved
       };
       localStorage.setItem("crosswordData", JSON.stringify(crosswordData));
       return crosswordData;        
@@ -425,7 +444,8 @@ const reducer = (state, action) => {
         cellData: newState.cellData,
         selectedCell: newState.selectedCell,
         across: newState.across,
-        cols: newState.cols
+        cols: newState.cols,
+        solved: newState.solved
       };
       localStorage.setItem("crosswordData", JSON.stringify(crosswordData));
       return crosswordData;
@@ -483,7 +503,8 @@ const reducer = (state, action) => {
       cellData: newState.cellData,
       selectedCell: index + 1,
       across: newState.across,
-      cols: newState.cols
+      cols: newState.cols,
+      solved: newState.solved
     };
     localStorage.setItem("crosswordData", JSON.stringify(crosswordData));
 
@@ -569,6 +590,12 @@ const Crossword = (props) => {
     }
   }
 
+  const nextPuzzleHandler = () => {
+    dispatch({ type: "setSolved" });
+    dispatch({ type: "resetGrid", initialCrosswordData: props.initialCrosswordData });
+    props.onNextPuzzle();
+  }
+
   return (
     <Fragment>
       {/* <Card className='dark'>
@@ -579,6 +606,9 @@ const Crossword = (props) => {
           onClick={powerUpOnClickHandler}
         />
       </Card>
+      {state.solved && !props.isThisLastPuzzle ? <div className='dark nextPuzzleDiv'><Button className="nextPuzzleBtn" onClick={nextPuzzleHandler}>
+            Next Puzzle</Button></div> : null
+      }
       <div className={`crosswordContent ${state.cols > 5 ? 'mediumGrid' : 'smallGrid'}`}>
         <Card className='dark crosswordCluesCard'>
           <CrosswordClues 
@@ -613,7 +643,7 @@ const Crossword = (props) => {
         </Card>
       </div>
       <Button className="resetBtn" onClick={resetGrid}>
-        Reset
+        Reset Current Puzzle
       </Button>
       <div>
         <p>Game icons made by Freepik from www.flaticon.com</p>
